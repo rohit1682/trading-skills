@@ -1,0 +1,13 @@
+# secrets and personal config
+.env
+config.toml
+# runtime state: positions, journals, logs, kill switch, backtest outputs
+state/
+data/
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/

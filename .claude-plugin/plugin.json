@@ -1,0 +1,7 @@
+{
+  "name": "groww-trading-skills",
+  "version": "0.1.0",
+  "description": "Indicator-based NSE trading through the Groww Trade API: scan, analyse, backtest, size, execute and automate. Paper trading by default.",
+  "license": "MIT",
+  "skills": "./skills/"
+}

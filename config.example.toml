@@ -1,0 +1,63 @@
+# growwbot configuration. Copy to config.toml (git-ignored) and edit.
+#   cp config.example.toml config.toml
+# Secrets (API key, TOTP secret) never go here. They go in .env.
+
+# "paper" simulates fills locally. "live" sends real orders to Groww, and ALSO
+# needs GROWW_ENABLE_LIVE in .env and the --live flag on the command line.
+mode = "paper"
+
+# Capital the bot is allowed to use, in rupees. In live mode the bot uses the
+# smaller of this and the cash Groww reports. Start small.
+capital = 50000
+
+# Symbols to scan / trade (NSE trading symbols). Liquid large caps behave best
+# with these indicators: tight spreads, fewer gaps, no circuit locks.
+watchlist = [
+  "RELIANCE", "HDFCBANK", "ICICIBANK", "INFY", "TCS",
+  "SBIN", "AXISBANK", "LT", "ITC", "BHARTIARTL",
+  "KOTAKBANK", "HINDUNILVR", "MARUTI", "SUNPHARMA", "TITAN",
+]
+
+[strategy]
+# One of: ema_trend, supertrend_adx, rsi2_reversion, macd_momentum,
+#         donchian_breakout, vwap_pullback, orb
+name = "supertrend_adx"
+# Optional parameter overrides for the chosen strategy, e.g. adx_min = 25
+params = {}
+
+[risk]
+risk_per_trade_pct = 0.5        # % of capital lost if the stop is hit (sizing rule)
+max_position_pct = 20.0         # no single position above this % of capital
+max_open_positions = 3
+max_daily_loss_pct = 2.0        # realised + open loss today; hitting it trips the kill switch
+max_trades_per_day = 4
+max_consecutive_losses = 3      # stop opening trades for the day after this many losers in a row
+min_reward_risk = 1.5           # target distance / stop distance, when a target exists
+min_price = 50.0                # skip penny stocks
+max_slippage_pct = 0.5          # skip the entry if price has run this far past the signal close
+blocked_symbols = []
+# Intraday (MIS) timing, IST
+no_entries_before = "09:30"
+no_entries_after = "14:30"
+squareoff_time = "15:10"        # bot flattens MIS positions here (Groww's own auto square-off is later and charges a fee)
+regime_filter = true            # only take longs while NIFTY 50 closes above its 50-day EMA
+# NSE trading holidays (YYYY-MM-DD) so the engine stays idle. Copy them from NSE's holiday list each year.
+holidays = []
+
+[execution]
+entry_order_type = "MARKET"     # MARKET or LIMIT (LIMIT uses signal close + limit_buffer_pct)
+limit_buffer_pct = 0.1
+place_broker_stop = true        # live: place a real SL-M stop at Groww after each fill
+poll_seconds = 30
+slippage_pct = 0.05             # paper/backtest slippage per side
+max_orders_per_second = 1       # far below SEBI's 10 OPS retail-algo threshold
+
+[backtest]
+initial_capital = 50000
+# Max bars of history to request. Groww limits: 1-5 min -> 30 days per call,
+# 10-30 min -> 90 days, 1 hour+ -> 180 days; the loader stitches calls together.
+days = 730
+
+# Uncomment to override Groww's published charges (see growwbot/costs.py).
+# [costs]
+# brokerage_max = 20.0

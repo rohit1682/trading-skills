@@ -1,0 +1,7 @@
+# Python 3.10+
+pandas>=2.2,<3
+numpy>=1.26
+growwapi>=1.5.0     # official Groww Trade API SDK
+pyotp>=2.9          # TOTP login
+yfinance>=0.2.50    # fallback market data for paper trading / backtests without Groww credentials
+tomli>=2.0; python_version < "3.11"
