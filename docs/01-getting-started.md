@@ -11,7 +11,7 @@
 ## Install on Windows (PowerShell)
 
 ```powershell
-cd $HOME\Desktop\groww-trading-skills
+cd $HOME\Personal\trading-skills
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1          # if blocked: Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 pip install -r requirements-dev.txt
@@ -24,7 +24,7 @@ python -m pytest
 ## Install on macOS / Linux
 
 ```bash
-cd ~/Desktop/groww-trading-skills
+cd ~/Personal/trading-skills
 python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r requirements-dev.txt
 cp config.example.toml config.toml && cp .env.example .env

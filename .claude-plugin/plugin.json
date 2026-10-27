@@ -1,5 +1,5 @@
 {
-  "name": "groww-trading-skills",
+  "name": "trading-skills",
   "version": "0.2.0",
   "description": "17 Claude skills for trading NSE stocks through the Groww Trade API: regime, screening, analysis, backtesting, walk-forward, risk, execution and automation. Paper trading by default.",
   "license": "MIT",
@@ -8,8 +8,8 @@
     "name": "Rohit Ghosh",
     "url": "https://github.com/rohit1682"
   },
-  "homepage": "https://github.com/rohit1682/groww-trading-skills",
-  "repository": "https://github.com/rohit1682/groww-trading-skills",
+  "homepage": "https://github.com/rohit1682/trading-skills",
+  "repository": "https://github.com/rohit1682/trading-skills",
   "keywords": [
     "claude-code",
     "claude-skills",

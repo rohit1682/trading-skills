@@ -1,4 +1,4 @@
-# groww-trading-skills
+# trading-skills
 
 Owner: Rohit Ghosh (@rohit1682). Python engine `growwbot/` + Claude skills in `skills/` (install with `python -m growwbot install-skills`)
 for trading NSE stocks via the Groww Trade API. Run commands from the repo root

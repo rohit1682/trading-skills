@@ -11,7 +11,7 @@ but scheduling uses local time).
 
    ```bat
    @echo off
-   cd /d %USERPROFILE%\Desktop\groww-trading-skills
+   cd /d %USERPROFILE%\Personal\trading-skills
    call .venv\Scripts\activate.bat
    python -m growwbot run >> state\engine.log 2>&1
    ```
@@ -30,7 +30,7 @@ but scheduling uses local time).
 ## macOS / Linux: cron
 
 ```cron
-5 9 * * 1-5 cd ~/Desktop/groww-trading-skills && .venv/bin/python -m growwbot run >> state/engine.log 2>&1
+5 9 * * 1-5 cd ~/Personal/trading-skills && .venv/bin/python -m growwbot run >> state/engine.log 2>&1
 ```
 
 macOS: allow cron Full Disk Access, and use `caffeinate -i` to stop sleep.
@@ -44,8 +44,8 @@ gives a stable connection and a static IP you can register with Groww. Keep
 ## Alerts and the daily plan
 
 ```cron
-50 8 * * 1-5  cd ~/groww-trading-skills && .venv/bin/python -m growwbot plan > /dev/null
-*/5 9-15 * * 1-5 cd ~/groww-trading-skills && .venv/bin/python -m growwbot alerts watch --once
+50 8 * * 1-5  cd ~/trading-skills && .venv/bin/python -m growwbot plan > /dev/null
+*/5 9-15 * * 1-5 cd ~/trading-skills && .venv/bin/python -m growwbot alerts watch --once
 ```
 
 ## Monitoring

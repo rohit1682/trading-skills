@@ -1,4 +1,4 @@
-# groww-trading-skills
+# trading-skills
 
 **Owner:** Rohit Ghosh ([@rohit1682](https://github.com/rohit1682)) · MIT licence · v0.2.0
 
@@ -62,7 +62,7 @@ looks ahead). **Backtest them on your own symbols before trusting any.**
 ## Quick start (Windows PowerShell)
 
 ```powershell
-cd $HOME\Desktop\groww-trading-skills
+cd $HOME\Personal\trading-skills
 py -3.12 -m venv .venv; .\.venv\Scripts\Activate.ps1
 pip install -r requirements-dev.txt
 copy config.example.toml config.toml     # capital, watchlist, strategy, risk limits
@@ -123,8 +123,8 @@ python -m growwbot install-skills --scope global     # copies into ~/.claude/ski
 Or as a Claude Code plugin once pushed to GitHub:
 
 ```
-/plugin marketplace add rohit1682/groww-trading-skills
-/plugin install groww-trading-skills@groww-trading-skills
+/plugin marketplace add rohit1682/trading-skills
+/plugin install trading-skills@trading-skills
 ```
 
 ## Repo layout
