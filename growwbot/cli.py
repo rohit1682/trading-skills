@@ -12,7 +12,7 @@ import pandas as pd
 
 from . import backtest as bt
 from . import broker as brk
-from . import config, data, indicators, risk, strategies
+from . import alerts, analytics, config, data, indicators, risk, strategies
 from .costs import CostModel
 from .engine import Engine, now_ist
 
@@ -348,6 +348,229 @@ def cmd_paper_reset(args, cfg):
     print("Paper account reset (old journal kept as a .bak file).")
 
 
+# ----------------------------------------------------------------------------- research (read-only)
+
+def _daily(symbols, args, days=400):
+    frames = _load_universe(symbols, "1day", days, args.source, getattr(args, "csv_dir", None))
+    return {k: data.completed_bars(v, "1day", now_ist()) for k, v in frames.items() if len(v)}
+
+
+def _one_daily(symbol, args, days=400):
+    return _daily([symbol], args, days).get(symbol)
+
+
+def _prices(symbols, source="auto"):
+    from .groww_client import Groww, has_credentials
+
+    if has_credentials() and source in ("auto", "groww"):
+        try:
+            return Groww().ltp(symbols)
+        except Exception as e:
+            print(f"[warn] Groww LTP failed ({e}); using last daily close", file=sys.stderr)
+    out = {}
+    for s in symbols:
+        try:
+            out[s] = float(data.load(s, "1day", 10, source)["close"].iloc[-1])
+        except Exception as e:
+            print(f"[warn] {s}: {e}", file=sys.stderr)
+    return out
+
+
+def cmd_regime(args, cfg):
+    syms = analytics.universe(args.universe, cfg)
+    nifty = _one_daily("NIFTY", args)
+    if nifty is None:
+        print("No NIFTY data.")
+        return 1
+    vix = None
+    try:
+        vix = _one_daily("INDIAVIX", args, 30)
+    except Exception:
+        pass
+    out = analytics.market_regime(nifty, _daily(syms, args), vix)
+    _print(out, args.json)
+
+
+def cmd_screen(args, cfg):
+    syms = analytics.universe(args.universe, cfg)
+    table = analytics.screen(_daily(syms, args), args.expr)
+    if args.json:
+        _print(table.reset_index().to_dict("records") if not table.empty else [], True)
+    elif table.empty:
+        print(f"No stocks in {len(syms)} match: {analytics.PRESETS.get(args.expr, args.expr)}")
+    else:
+        print(table.to_string())
+        print(f"\n{len(table)} of {len(syms)} match. A screen is a shortlist, not a buy list: run `analyze` on each.")
+
+
+def cmd_rank(args, cfg):
+    syms = analytics.universe(args.universe, cfg)
+    t = analytics.relative_strength(_daily(syms, args, 400), _one_daily("NIFTY", args, 400))
+    t = t.head(args.top) if args.top else t
+    _print(t.reset_index().to_dict("records"), True) if args.json else print(t.to_string())
+
+
+def cmd_levels(args, cfg):
+    df = _one_daily(args.symbol.upper(), args, 120)
+    if df is None:
+        print("No data.")
+        return 1
+    _print(analytics.pivot_levels(df), args.json)
+
+
+def cmd_montecarlo(args, cfg):
+    if args.trades_csv:
+        t = pd.read_csv(args.trades_csv)
+        r = t["r_multiple"].tolist()
+    else:
+        strat = strategies.get(args.strategy or cfg.strategy["name"])
+        universe_ = _load_universe(analytics.universe(args.universe, cfg), strat.interval,
+                                   59 if strat.intraday else int(cfg.backtest.get("days", 730)), args.source)
+        res = bt.run(universe_, strat, risk_cfg=cfg.risk, initial_capital=cfg.capital, costs=CostModel.from_dict(cfg.costs))
+        r = [t.r_multiple for t in res.trades]
+    risk_pct = args.risk or float(cfg.risk.get("risk_per_trade_pct", 0.5))
+    try:
+        out = analytics.monte_carlo(r, risk_pct=risk_pct, n_trades=args.n, sims=args.sims)
+    except ValueError as e:
+        print(e)
+        return 1
+    _print(out, args.json)
+    if not args.json:
+        print("\nPlan for the p95 drawdown and losing streak, not the median: that is what you will live through.")
+
+
+def cmd_optimize(args, cfg):
+    strat = strategies.get(args.strategy or cfg.strategy["name"])
+    days = args.days or (59 if strat.intraday else int(cfg.backtest.get("days", 730)))
+    universe_ = _load_universe(analytics.universe(args.universe, cfg), strat.interval, days, args.source, args.csv_dir)
+    grid = analytics.parse_grid(args.grid, strat.name)
+    out = analytics.walk_forward(universe_, strat, grid, folds=args.folds,
+                                 run_kwargs=dict(risk_cfg={**cfg.risk, "regime_filter": False}, initial_capital=cfg.capital,
+                                                 costs=CostModel.from_dict(cfg.costs)))
+    if args.json:
+        _print(out, True)
+        return
+    print(f"Walk-forward for {strat.name}: {out['combinations_tested']} parameter sets, {len(out['folds'])} folds")
+    print(pd.DataFrame(out["folds"])[["test_start", "best_params", "test_return_pct", "test_trades", "test_pf"]].to_string(index=False))
+    for k in ("oos_return_pct_compounded", "default_params_oos_return_pct_compounded", "params_stable_across_folds", "verdict"):
+        print(f"  {k}: {out[k]}")
+
+
+def cmd_alerts(args, cfg):
+    if args.action == "add":
+        a = alerts.add(args.symbol, args.condition, args.value, args.note or "")
+        print(f"Added alert {a['id']}: {a['symbol']} {a['condition']} {a['value']}")
+    elif args.action == "rm":
+        print("Removed." if alerts.remove(args.symbol) else "No alert with that id.")
+    elif args.action == "list":
+        rows = alerts.load()
+        print(pd.DataFrame(rows).to_string(index=False) if rows else "No alerts.")
+    elif args.action == "watch":
+        def rsis(syms):
+            out = {}
+            for s in set(syms):
+                df = _one_daily(s, args, 120)
+                if df is not None:
+                    out[s] = float(indicators.rsi(df["close"]).iloc[-1])
+            return out
+        alerts.watch(lambda syms: _prices(syms, args.source), rsis, interval_s=args.interval, once=args.once)
+
+
+def cmd_portfolio(args, cfg):
+    if args.csv:
+        h = pd.read_csv(args.csv)
+        h.columns = [c.lower() for c in h.columns]
+        holdings = [{"symbol": r.symbol.upper(), "qty": float(r.qty), "avg_price": float(r.avg_price)} for r in h.itertuples()]
+    else:
+        from .groww_client import Groww, has_credentials
+
+        if not has_credentials():
+            print("No Groww credentials: pass --csv holdings.csv (columns symbol,qty,avg_price).")
+            return 1
+        raw = (Groww().call("get_holdings_for_user") or {}).get("holdings", [])
+        holdings = [{"symbol": x["trading_symbol"], "qty": float(x["quantity"]), "avg_price": float(x["average_price"])}
+                    for x in raw if float(x.get("quantity") or 0) > 0]
+    t = analytics.portfolio_review(holdings, _daily([x["symbol"] for x in holdings], args))
+    if args.json:
+        _print(t.reset_index().to_dict("records"), True)
+    else:
+        print(t.to_string() if not t.empty else "No holdings with enough price history.")
+        print("\nRead-only review. Suggested stops are ATR/EMA based levels to consider, not orders.")
+
+
+def cmd_plan(args, cfg):
+    """Pre-market plan in Markdown: regime, open positions, signals with levels, risk budget."""
+    lines = [f"# Trading plan for {now_ist():%A %d %b %Y}", ""]
+    syms = analytics.universe(args.universe, cfg)
+    nifty = _one_daily("NIFTY", args)
+    if nifty is not None:
+        try:
+            vix = _one_daily("INDIAVIX", args, 30)
+        except Exception:
+            vix = None
+        reg = analytics.market_regime(nifty, _daily(syms, args), vix)
+        lines += ["## Market regime", f"**{reg['posture']}** (score {reg['score']}/100)", ""]
+        lines += [f"- {r}" for r in reg["reasons"]] + [""]
+    else:
+        reg = {"suggested_risk_multiplier": 1.0}
+        lines += ["## Market regime", "NIFTY data unavailable.", ""]
+    rm_ = risk.RiskManager(cfg.risk, capital=cfg.capital, persist=True)
+    budget = cfg.capital * rm_.cfg["risk_per_trade_pct"] / 100 * reg["suggested_risk_multiplier"]
+    lines += ["## Risk budget",
+              f"- Capital Rs {cfg.capital:,.0f}; risk per trade Rs {budget:,.0f} after the regime multiplier",
+              f"- Daily loss limit Rs {rm_.daily_loss_limit():,.0f}; max {rm_.cfg['max_trades_per_day']} trades, "
+              f"{rm_.cfg['max_open_positions']} open positions",
+              f"- Kill switch: {'ON' if risk.kill_switch_active() else 'off'}", ""]
+    pos_path = config.state_dir() / f"positions_{'live' if cfg.mode == 'live' else 'paper'}.json"
+    pos = json.loads(pos_path.read_text())["positions"] if pos_path.exists() else {}
+    lines += ["## Open bot positions"] + ([f"- {s}: {p['qty']} @ {p['entry']:.2f}, stop {p['stop']:.2f}" for s, p in pos.items()] or ["- none"]) + [""]
+    strat = strategies.get(cfg.strategy["name"])
+    lines += [f"## Signals ({strat.name})"]
+    found = 0
+    for sym in cfg.watchlist:
+        try:
+            csv = f"{args.csv_dir}/{sym}_{strat.interval}.csv" if args.csv_dir else None
+            raw = data.load(sym, strat.interval, 400 if not strat.intraday else 20, args.source, csv=csv)
+            df = data.completed_bars(raw, strat.interval, now_ist())
+            sig = strat.signals(df, **cfg.strategy.get("params", {})).iloc[-1]
+        except Exception:
+            continue
+        if bool(sig["entry"]):
+            found += 1
+            lv = analytics.pivot_levels(_one_daily(sym, args, 120))
+            tgt = "" if math.isnan(sig["target"]) else f", target {sig['target']:.2f}"
+            lines.append(f"- **{sym}** close {df['close'].iloc[-1]:.2f}, stop {sig['stop']:.2f}{tgt}; "
+                         f"pivot {lv['classic']['P']}, R1 {lv['classic']['R1']}, S1 {lv['classic']['S1']}")
+    if not found:
+        lines.append("- No entry signals. Sitting out is a position.")
+    pending = [a for a in alerts.load() if not a["triggered"]]
+    lines += ["", "## Alerts"] + ([f"- {a['symbol']} {a['condition']} {a['value']} {a['note']}" for a in pending] or ["- none"])
+    lines += ["", "_Not financial advice. Check news, results dates and F&O ban list before acting._"]
+    text = "\n".join(lines)
+    out = config.state_dir() / "plans"
+    out.mkdir(exist_ok=True)
+    path = out / f"{now_ist():%Y-%m-%d}.md"
+    path.write_text(text)
+    print(text + f"\n\n(saved to {path})")
+
+
+def cmd_install_skills(args, cfg):
+    """Copy skills/ into ./.claude/skills (this repo) or ~/.claude/skills (--global). Works on Windows too."""
+    import shutil
+    from pathlib import Path
+
+    src = config.home() / "skills"
+    dest = (Path.home() if args.scope == "global" else config.home()) / ".claude" / "skills"
+    dest.mkdir(parents=True, exist_ok=True)
+    names = sorted(p.name for p in src.iterdir() if (p / "SKILL.md").exists())
+    for name in names:
+        shutil.copytree(src / name, dest / name, dirs_exist_ok=True)
+    print(f"Installed {len(names)} skills into {dest}")
+    if args.scope == "global":
+        print(f"Set GROWWBOT_HOME={config.home()} so the skills find the engine from any folder.")
+    print("Re-run after `git pull` to pick up skill updates.")
+
+
 # ----------------------------------------------------------------------------- parser
 
 def build_parser() -> argparse.ArgumentParser:
@@ -396,6 +619,40 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--qty", type=int, required=True); sp.add_argument("--intraday", action="store_true")
     sp = add("paper-reset", cmd_paper_reset, "reset the paper account")
     sp.add_argument("--capital", type=float)
+
+    sp = add("install-skills", cmd_install_skills, "copy the Claude skills into .claude/skills (project) or ~/.claude/skills")
+    sp.add_argument("--scope", choices=["project", "global"], default="project")
+
+    # research (read-only)
+    def research(name, fn, help_):
+        sp = add(name, fn, help_)
+        sp.add_argument("--source", default="auto")
+        sp.add_argument("--csv-dir")
+        return sp
+
+    sp = research("regime", cmd_regime, "market regime: NIFTY trend, breadth, India VIX -> exposure posture")
+    sp.add_argument("--universe", nargs="*", default=["nifty50"])
+    sp = research("screen", cmd_screen, f"technical screen; presets: {', '.join(analytics.PRESETS)} or a query")
+    sp.add_argument("expr"); sp.add_argument("--universe", nargs="*", default=["nifty50"])
+    sp = research("rank", cmd_rank, "relative-strength (momentum) ranking vs NIFTY")
+    sp.add_argument("--universe", nargs="*", default=["nifty50"]); sp.add_argument("--top", type=int)
+    sp = research("levels", cmd_levels, "pivot points, CPR, Camarilla and swing levels for the next session")
+    sp.add_argument("symbol")
+    sp = research("montecarlo", cmd_montecarlo, "drawdown / losing-streak odds from a trade list")
+    sp.add_argument("--trades-csv"); sp.add_argument("--strategy"); sp.add_argument("--universe", nargs="*", default=["watchlist"])
+    sp.add_argument("--risk", type=float); sp.add_argument("--n", type=int); sp.add_argument("--sims", type=int, default=5000)
+    sp = research("optimize", cmd_optimize, "walk-forward parameter search, judged out of sample")
+    sp.add_argument("--strategy"); sp.add_argument("--grid"); sp.add_argument("--folds", type=int, default=4)
+    sp.add_argument("--universe", nargs="*", default=["watchlist"]); sp.add_argument("--days", type=int)
+    sp = research("alerts", cmd_alerts, "price/RSI alerts: add | list | rm | watch")
+    sp.add_argument("action", choices=["add", "list", "rm", "watch"])
+    sp.add_argument("symbol", nargs="?", help="symbol (add) or alert id (rm)")
+    sp.add_argument("condition", nargs="?", choices=list(alerts.CONDITIONS)); sp.add_argument("value", nargs="?", type=float)
+    sp.add_argument("--note"); sp.add_argument("--interval", type=float, default=60); sp.add_argument("--once", action="store_true")
+    sp = research("portfolio", cmd_portfolio, "review Groww holdings (read-only) or a holdings CSV")
+    sp.add_argument("--csv")
+    sp = research("plan", cmd_plan, "pre-market plan in Markdown (saved to state/plans/)")
+    sp.add_argument("--universe", nargs="*", default=["watchlist"])
     return p
 
 

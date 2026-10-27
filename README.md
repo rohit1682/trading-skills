@@ -1,143 +1,157 @@
 # groww-trading-skills
 
-Claude skills plus a small Python engine (`growwbot`) for trading NSE stocks
-through your **Groww** account with well-known technical indicators: EMA,
-RSI, MACD, ADX, Supertrend, ATR, Bollinger Bands, VWAP and Donchian channels.
+**Owner:** Rohit Ghosh ([@rohit1682](https://github.com/rohit1682)) · MIT licence · v0.2.0
 
-It scans, analyses, backtests, sizes, places and manages trades, and can run
-fully automatically during market hours. It starts in **paper trading** and
-only sends real orders after three separate opt-ins.
+17 Claude skills plus a Python engine (`growwbot`) for trading NSE stocks
+through your **Groww** account with proven technical indicators: EMA, RSI,
+MACD, ADX, Supertrend, ATR, Bollinger Bands, VWAP, Donchian channels, pivots
+and CPR.
+
+It reads the market regime, screens and ranks stocks, analyses charts,
+backtests and walk-forward-tests strategies, stress-tests drawdowns, sizes
+positions, places and manages trades, and can trade fully automatically
+during market hours. It starts in **paper trading** and only sends real
+orders after three separate opt-ins.
 
 > **Read [DISCLAIMER.md](DISCLAIMER.md) first.** Nothing here guarantees a
-> profit. Indicators are not predictions. SEBI found that 7 in 10 individual
-> intraday traders in the equity cash segment lost money in FY2022-23. What
-> this toolkit can do is enforce discipline: fixed risk per trade, hard stops,
-> a daily loss limit, a kill switch, and honest backtests that include Groww's
-> charges.
+> profit. SEBI found that about 7 in 10 individual intraday traders in the
+> equity cash segment lost money in FY2022-23. What this toolkit gives you is
+> discipline: fixed risk per trade, hard stops at the broker, a daily loss
+> limit, a kill switch, and honest backtests that include Groww's charges.
 
 ## The skills
 
-| skill | what it does |
-| --- | --- |
-| [`groww-setup`](skills/groww-setup/SKILL.md) | Install, connect the Groww Trade API (TOTP or key+secret), `doctor` health check |
-| [`market-scanner`](skills/market-scanner/SKILL.md) | Scan the watchlist for fresh entry signals with stop, target and risk % |
-| [`technical-analysis`](skills/technical-analysis/SKILL.md) | Full indicator read of one stock, and which strategies fire on it |
-| [`strategy-backtester`](skills/strategy-backtester/SKILL.md) | Backtest with Groww charges, slippage, gap-through stops, risk rules; out-of-sample split |
-| [`risk-manager`](skills/risk-manager/SKILL.md) | Position sizing, PASS/BLOCK pre-trade checks, kill switch |
-| [`trade-executor`](skills/trade-executor/SKILL.md) | One trade: ticket, risk check, your explicit yes, then paper or live order + broker stop |
-| [`auto-trader`](skills/auto-trader/SKILL.md) | The automatic engine: signals, entries, stops, targets, square-off, daily loss breaker |
-| [`trade-journal`](skills/trade-journal/SKILL.md) | P&L after charges, win rate, profit factor, by-symbol and by-exit review |
+| group | skill | what it does |
+| --- | --- | --- |
+| Setup | [`groww-setup`](skills/groww-setup/SKILL.md) | Install, connect the Groww Trade API (TOTP or key+secret), `doctor` check |
+| Research | [`market-regime`](skills/market-regime/SKILL.md) | NIFTY trend + breadth + India VIX → RISK-ON / CAUTIOUS / DEFENSIVE |
+| | [`daily-trading-plan`](skills/daily-trading-plan/SKILL.md) | Pre-market plan: regime, risk budget, positions, signals with levels, alerts |
+| | [`market-scanner`](skills/market-scanner/SKILL.md) | Fresh entry signals on the watchlist with stop, target and risk % |
+| | [`stock-screener`](skills/stock-screener/SKILL.md) | Screen NIFTY 50 / Bank NIFTY / any list with presets or custom filters |
+| | [`relative-strength`](skills/relative-strength/SKILL.md) | Momentum ranking vs NIFTY with a 1-99 RS rating |
+| | [`technical-analysis`](skills/technical-analysis/SKILL.md) | Full indicator read of one stock and which strategies fire |
+| | [`pivot-levels`](skills/pivot-levels/SKILL.md) | Pivots, CPR, Camarilla, swing support/resistance |
+| | [`portfolio-review`](skills/portfolio-review/SKILL.md) | Groww holdings health check: trend, weight, suggested stops (read-only) |
+| | [`price-alerts`](skills/price-alerts/SKILL.md) | Price/RSI alerts in the console or Telegram |
+| Testing | [`strategy-backtester`](skills/strategy-backtester/SKILL.md) | Backtest with Groww charges, slippage, gap-through stops, risk rules, out-of-sample |
+| | [`strategy-optimizer`](skills/strategy-optimizer/SKILL.md) | Walk-forward tuning that exposes curve-fitting |
+| | [`risk-of-ruin`](skills/risk-of-ruin/SKILL.md) | Monte Carlo drawdown, losing-streak and ruin odds |
+| Trading | [`risk-manager`](skills/risk-manager/SKILL.md) | Position sizing, PASS/BLOCK checks, kill switch |
+| | [`trade-executor`](skills/trade-executor/SKILL.md) | One trade: ticket → risk check → your yes → order + broker stop |
+| | [`auto-trader`](skills/auto-trader/SKILL.md) | The automatic engine: entries, stops, targets, square-off, loss breaker |
+| | [`trade-journal`](skills/trade-journal/SKILL.md) | P&L after charges, win rate, profit factor, go-live readiness |
+
+Example prompts for each: [docs/04-skills-guide.md](docs/04-skills-guide.md).
 
 ## Strategies
 
 | name | timeframe | idea |
 | --- | --- | --- |
-| `ema_trend` | daily, CNC | EMA 9/21 cross above the 200 EMA, ADX ≥ 20, RSI 50-70; stop 2 ATR, target 4 ATR |
-| `supertrend_adx` | daily, CNC | Supertrend(10,3) flips up, ADX ≥ 20, above EMA50, volume ≥ 1.2x; stop on the Supertrend line, 2R target |
-| `rsi2_reversion` | daily, CNC | Connors RSI(2) < 10 above the 200 SMA; exit above the 5 SMA; 10-day time stop |
-| `macd_momentum` | daily, CNC | MACD crosses signal with EMA50 > EMA200 and RSI > 50 |
-| `donchian_breakout` | daily, CNC | 20-day high breakout on 1.5x volume, exit at the 10-day low |
-| `vwap_pullback` | 5-min, MIS | Intraday uptrend (above VWAP, EMA9 > EMA21), dip to EMA21/VWAP, bullish close; 2R target |
-| `orb` | 5-min, MIS | 15-minute opening-range breakout above VWAP on 1.5x volume; stop at the range midpoint |
+| `ema_trend` | daily, CNC | EMA 9/21 cross above the 200 EMA, ADX ≥ 20, RSI 50-70 |
+| `supertrend_adx` | daily, CNC | Supertrend(10,3) flips up, ADX ≥ 20, above EMA 50, volume ≥ 1.2x |
+| `rsi2_reversion` | daily, CNC | Connors RSI(2) < 10 above the 200 SMA, exit above the 5 SMA |
+| `macd_momentum` | daily, CNC | MACD crosses signal with EMA 50 > EMA 200 and RSI > 50 |
+| `donchian_breakout` | daily, CNC | 20-day high breakout on volume, exit at the 10-day low |
+| `vwap_pullback` | 5-min, MIS | Intraday pullback to VWAP/EMA 21 in an uptrend |
+| `orb` | 5-min, MIS | 15-minute opening-range breakout above VWAP on volume |
 
-All are long-only and use completed candles only (a test checks that no
-strategy looks ahead). An optional market-regime filter blocks new longs
-while NIFTY 50 is below its 50-day EMA. **Backtest them on your own symbols
-before trusting any of them**: which one (if any) works depends on the
-stocks and the market phase.
+Rules, strengths and failure modes: [docs/06-strategies.md](docs/06-strategies.md).
+All are long-only and use completed candles only (a test proves no strategy
+looks ahead). **Backtest them on your own symbols before trusting any.**
 
-## Quick start
+## Quick start (Windows PowerShell)
 
-```bash
-git clone <your repo url> groww-trading-skills && cd groww-trading-skills
-python3.12 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp config.example.toml config.toml      # capital, watchlist, strategy, risk limits
-cp .env.example .env                    # Groww API key + TOTP secret (never commit)
+```powershell
+cd $HOME\Desktop\groww-trading-skills
+py -3.12 -m venv .venv; .\.venv\Scripts\Activate.ps1
+pip install -r requirements-dev.txt
+copy config.example.toml config.toml     # capital, watchlist, strategy, risk limits
+copy .env.example .env                   # Groww API key + TOTP secret (never commit)
 
-python -m growwbot doctor               # check everything
+python -m growwbot doctor                # check everything
+python -m growwbot install-skills        # make the skills available to Claude Code here
+python -m growwbot regime
 python -m growwbot backtest --all --split 0.7
-python -m growwbot scan
-python -m growwbot analyze RELIANCE
-python -m growwbot run                  # automatic PAPER trading during market hours
-python -m growwbot report               # how did it do
+python -m growwbot run                   # automatic PAPER trading during market hours
+python -m growwbot report
 ```
 
-Or just open the folder in Claude Code and ask: "set up my Groww bot",
-"backtest all strategies on bank stocks", "scan for setups", "start paper
-trading", "how did the bot do this week". The skills are linked into
-`.claude/skills/`, so Claude Code picks them up automatically.
-
-### Use the skills in other projects
-
-```bash
-# As a plugin, from your pushed GitHub repo:
-/plugin marketplace add <your-github-user>/groww-trading-skills
-/plugin install groww-trading-skills@groww-trading-skills
-```
-
-or copy `skills/*` into `~/.claude/skills/`. Either way, set
-`GROWWBOT_HOME=/path/to/groww-trading-skills` so the commands find the engine,
-config and state.
+macOS/Linux and details: [docs/01-getting-started.md](docs/01-getting-started.md).
+Then open the folder in Claude Code and just ask: "plan my trading day",
+"backtest all strategies on bank stocks", "start paper trading", "how did the
+bot do this week?".
 
 ## Safety design
 
 - **Paper by default.** Real orders need `mode = "live"` in `config.toml` **and**
-  `GROWW_ENABLE_LIVE=YES_I_ACCEPT_REAL_MONEY_RISK` in `.env` **and** `--live`
-  on the command. The skills tell Claude never to flip these for you.
-- **Every entry is risk-checked**: 0.5 % of capital at risk per trade, 20 %
-  max per position, 3 open positions, 4 trades a day, 2 % daily loss limit,
-  stop after 3 losses in a row, minimum 1.5 reward:risk, 09:30-14:30 entry
-  window for intraday, minimum price, slippage guard, blocked symbols.
-- **Broker-side stops.** After each live fill the bot places an SL-M order at
-  Groww, so a crash or lost connection doesn't leave the position unprotected.
-  It checks whether that stop already filled before it ever sends its own
-  sell, so it doesn't sell twice.
-- **Kill switch.** `python -m growwbot kill [--flatten]`. Hitting the daily
-  loss limit engages it automatically and flattens bot positions.
-- **Intraday square-off** at 15:10, before Groww's own auto square-off.
-- **Rate limit.** At most 1 order per second, far below SEBI's 10 orders/second
-  retail-algo threshold and Groww's API limits.
-- **Secrets stay out of git.** `.env`, `config.toml` and `state/` are ignored.
-- **The bot only touches positions it opened.**
+  `GROWW_ENABLE_LIVE=YES_I_ACCEPT_REAL_MONEY_RISK` in `.env` **and** `--live`.
+  The skills tell Claude never to flip these for you.
+- **Every entry is risk-checked:** 0.5 % of capital at risk per trade, 20 % max
+  per position, 3 open positions, 4 trades a day, 2 % daily loss limit, stop
+  after 3 losses in a row, minimum 1.5 reward:risk, intraday entry window,
+  NIFTY regime filter, slippage guard, blocked symbols.
+- **Stops live at Groww.** After each live fill the bot places an SL-M order,
+  so a crash or lost connection doesn't leave a position unprotected, and it
+  never sells twice.
+- **Kill switch** (`python -m growwbot kill --flatten`), tripped automatically
+  by the daily loss limit.
+- **1 order per second max**, far below SEBI's 10/sec retail-algo threshold.
+- **Secrets stay out of git** (`.env`, `config.toml`, `state/` are ignored).
+- **Only positions the bot opened are touched.**
 
-## Groww API notes
+More: [docs/07-risk-management.md](docs/07-risk-management.md),
+[docs/09-paper-to-live.md](docs/09-paper-to-live.md).
 
-- SDK: [`growwapi`](https://groww.in/trade-api/docs/python-sdk) (official). Auth by
-  TOTP (no daily approval) or API key + secret (daily approval).
-- The Trade API is a paid Groww subscription; check the current price on Groww's Trading APIs page.
-- SEBI's retail algo framework applies from April 2026: register a static IP
-  with Groww if they ask for one, and keep the order rate low (the bot does).
-- Historical candles: 1-5 min up to 30 days per request, 10-30 min up to 90
-  days, hourly/daily up to 180 days; the loader stitches requests together.
-- CNC stops are placed as DAY SL-M orders, so the engine re-places them each
-  morning while it runs. If the engine isn't running on a trading day, a
-  swing position has no broker-side stop that day. Run the engine every
-  trading day while you hold swing positions, or add a GTT stop in the Groww app.
+## Documentation
+
+| | |
+| --- | --- |
+| [Getting started](docs/01-getting-started.md) | [Groww API setup](docs/02-groww-api-setup.md) |
+| [Configuration](docs/03-configuration.md) | [Skills guide](docs/04-skills-guide.md) |
+| [CLI reference](docs/05-cli-reference.md) | [Strategies](docs/06-strategies.md) |
+| [Risk management](docs/07-risk-management.md) | [Backtesting](docs/08-backtesting.md) |
+| [Paper to live](docs/09-paper-to-live.md) | [Running automatically](docs/10-automation.md) |
+| [Architecture](docs/11-architecture.md) | [FAQ & troubleshooting](docs/12-faq.md) |
+
+## Use the skills elsewhere
+
+```bash
+python -m growwbot install-skills --scope global     # copies into ~/.claude/skills
+# and set GROWWBOT_HOME to this folder so the commands find the engine
+```
+
+Or as a Claude Code plugin once pushed to GitHub:
+
+```
+/plugin marketplace add rohit1682/groww-trading-skills
+/plugin install groww-trading-skills@groww-trading-skills
+```
 
 ## Repo layout
 
 ```
-growwbot/            Python engine (indicators, strategies, risk, costs, backtest, broker, engine, CLI)
-skills/              the 8 Claude skills (SKILL.md each)
-.claude/skills/      symlinks so Claude Code loads the skills in this repo
+growwbot/            Python engine: indicators, strategies, risk, costs, backtest,
+                     analytics, alerts, broker (paper/live), engine, CLI
+skills/              the 17 Claude skills (one SKILL.md each)
+docs/                12 guides
+universes/           symbol lists (NIFTY 50, Bank NIFTY)
+tests/               pytest suite: no network, fake Groww SDK for the live path
 .claude-plugin/      plugin + marketplace manifest
-tests/               pytest suite (indicators, risk, costs, backtest, engine, live path with a fake Groww SDK)
-config.example.toml  settings template
-.env.example         secrets template
+config.example.toml  settings template      .env.example  secrets template
 ```
 
-Run the tests with `pip install -r requirements-dev.txt && python -m pytest`.
+`pip install -r requirements-dev.txt && python -m pytest` runs the tests.
 
 ## Credits and research
 
-Ideas and structure drawn from
-[tradermonty/claude-trading-skills](https://github.com/rohit1682/claude-trading-skills)
+Ideas drawn from [tradermonty/claude-trading-skills](https://github.com/rohit1682/claude-trading-skills)
 (risk-first workflows, honest backtest criteria),
 [day-trader-skill](https://github.com/rohit1682/day-trader-skill) (paper by
-default, risk gate before the broker, never trade without a yes), the
-finance skills on claudemarketplaces.com, Groww's Trade API docs and pricing
-page, SEBI's FY23 intraday study, and the classic indicator literature
-(Wilder, Appel, Connors, Donchian).
+default, a risk gate before the broker, never trade without a yes), the
+finance skills on claudemarketplaces.com, Groww's Trade API docs and pricing,
+SEBI's FY23 intraday study and retail-algo framework, and the indicator
+literature (Wilder, Appel, Connors, Donchian, Seykota/Turtles).
 
-MIT licensed. See [LICENSE](LICENSE).
+## Licence
+
+MIT © 2026 Rohit Ghosh. See [LICENSE](LICENSE).

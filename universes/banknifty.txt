@@ -1,0 +1,13 @@
+# Bank NIFTY constituents (approximate; verify at https://www.niftyindices.com).
+AUBANK
+AXISBANK
+BANKBARODA
+CANBK
+FEDERALBNK
+HDFCBANK
+ICICIBANK
+IDFCFIRSTB
+INDUSINDBK
+KOTAKBANK
+PNB
+SBIN

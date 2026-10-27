@@ -1,6 +1,6 @@
 # groww-trading-skills
 
-Python engine `growwbot/` + Claude skills in `skills/` (linked into `.claude/skills/`)
+Owner: Rohit Ghosh (@rohit1682). Python engine `growwbot/` + Claude skills in `skills/` (install with `python -m growwbot install-skills`)
 for trading NSE stocks via the Groww Trade API. Run commands from the repo root
 as `python -m growwbot <command>`; `python -m growwbot -h` lists them.
 

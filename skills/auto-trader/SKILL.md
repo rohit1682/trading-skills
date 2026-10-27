@@ -24,9 +24,9 @@ python -m growwbot kill --flatten [--live]
 
 The engine runs 09:15-15:30 IST on weekdays and stops after the close. Add
 exchange holidays to `[risk] holidays = ["2026-11-10", ...]` (check NSE's
-holiday list each year). To run it every trading day, schedule it at 09:10
-with cron (`10 9 * * 1-5 cd /path/to/repo && .venv/bin/python -m growwbot run >> state/engine.log 2>&1`)
-or Windows Task Scheduler. The computer must stay on and online.
+holiday list each year). To run it every trading day, schedule it for 09:05
+with Windows Task Scheduler or cron: step-by-step in `docs/10-automation.md`.
+The computer must stay on and online.
 
 ## What it does on each step
 

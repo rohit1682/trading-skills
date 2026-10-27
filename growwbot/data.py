@@ -24,7 +24,7 @@ GROWW_MAX_DAYS = {
 YF_INTERVAL = {"1minute": "1m", "2minute": "2m", "5minute": "5m", "15minute": "15m",
                "30minute": "30m", "1hour": "60m", "1day": "1d", "1week": "1wk", "1month": "1mo"}
 YF_MAX_DAYS = {"1m": 7, "2m": 59, "5m": 59, "15m": 59, "30m": 59, "60m": 729}
-INDEX_YF = {"NIFTY": "^NSEI", "BANKNIFTY": "^NSEBANK"}
+INDEX_YF = {"NIFTY": "^NSEI", "BANKNIFTY": "^NSEBANK", "INDIAVIX": "^INDIAVIX"}
 COLS = ["open", "high", "low", "close", "volume"]
 
 

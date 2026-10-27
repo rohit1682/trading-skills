@@ -1,11 +1,16 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "groww-trading-skills",
-  "owner": { "name": "Rohit" },
+  "owner": {
+    "name": "Rohit Ghosh",
+    "url": "https://github.com/rohit1682"
+  },
   "plugins": [
     {
       "name": "groww-trading-skills",
       "source": "./",
-      "description": "Indicator-based NSE trading through the Groww Trade API. Paper trading by default."
+      "description": "17 Claude skills for trading NSE stocks through Groww. Paper trading by default.",
+      "homepage": "https://github.com/rohit1682/groww-trading-skills"
     }
   ]
 }
