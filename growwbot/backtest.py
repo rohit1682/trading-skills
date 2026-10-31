@@ -77,6 +77,12 @@ class Result:
         daily = eq.resample("1D").last().dropna().pct_change().dropna()
         sharpe = float(daily.mean() / daily.std() * math.sqrt(252)) if len(daily) > 2 and daily.std() > 0 else float("nan")
         gross_win, gross_loss = wins.sum(), -losses.sum()
+        # Expectancy identity: with these average win/loss sizes, this is the win
+        # rate the strategy needs just to break even before it makes anything.
+        rs = np.array([t.r_multiple for t in self.trades]) if n else np.array([])
+        win_r = rs[rs > 0].mean() if (rs > 0).any() else 0.0
+        loss_r = -rs[rs <= 0].mean() if (rs <= 0).any() else 0.0
+        breakeven = 100 * loss_r / (win_r + loss_r) if (win_r + loss_r) > 0 else None
         return {
             "trades": n,
             "win_rate_pct": round(100 * len(wins) / n, 1) if n else 0.0,
@@ -91,6 +97,8 @@ class Result:
             "avg_loss": round(float(losses.mean()), 2) if len(losses) else 0.0,
             "expectancy_per_trade": round(float(pnl.mean()), 2) if n else 0.0,
             "avg_r": round(float(np.mean([t.r_multiple for t in self.trades])), 2) if n else 0.0,
+            "avg_win_r": round(float(win_r), 2), "avg_loss_r": round(-float(loss_r), 2),
+            "breakeven_win_rate_pct": round(breakeven, 1) if breakeven is not None else None,
             "final_equity": round(final, 2),
             "signals_blocked_by_risk": sum(self.blocked.values()),
         }

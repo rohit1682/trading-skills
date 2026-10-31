@@ -9,7 +9,7 @@
     {
       "name": "trading-skills",
       "source": "./",
-      "description": "17 Claude skills for trading NSE stocks through Groww. Paper trading by default.",
+      "description": "18 Claude skills for trading NSE stocks through Groww. Paper trading by default.",
       "homepage": "https://github.com/rohit1682/trading-skills"
     }
   ]

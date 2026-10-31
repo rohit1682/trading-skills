@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 (2026-10-31)
+
+- New `trade-odds` skill and `growwbot odds` command: bootstrap replays of a
+  single planned trade, with time-of-day-matched sampling for intraday,
+  pessimistic within-bar fills, historical precedent for the same strategy on
+  that symbol, and a verdict measured against the break-even win rate.
+  Adapted from the "time machine" in Jake Schincariol's day-trader-skill (MIT).
+- `backtest` now reports `avg_win_r`, `avg_loss_r` and `breakeven_win_rate_pct`;
+  `size` reports the break-even win rate its reward:risk implies.
+- 18 skills, 60 tests.
+
 ## 0.2.0 (2026-10-27)
 
 - 9 new skills: market-regime, daily-trading-plan, stock-screener,

@@ -1,6 +1,6 @@
 # 4. Skills guide
 
-17 skills in four groups. Each folder in `skills/` has a `SKILL.md` that tells
+18 skills in four groups. Each folder in `skills/` has a `SKILL.md` that tells
 Claude when to use it and which commands to run. Install with
 `python -m growwbot install-skills`.
 
@@ -28,6 +28,7 @@ Claude when to use it and which commands to run. Install with
 
 | skill | ask things like |
 | --- | --- |
+| `trade-odds` | "what are the odds on this RELIANCE trade?", "is this setup a coin flip?" |
 | `strategy-backtester` | "backtest all strategies on bank stocks with out-of-sample" |
 | `strategy-optimizer` | "tune supertrend_adx with walk-forward" |
 | `risk-of-ruin` | "how bad can drawdowns get at 1 % risk?" |
@@ -45,9 +46,10 @@ Claude when to use it and which commands to run. Install with
 
 1. Morning: `daily-trading-plan` (includes the regime).
 2. Start the engine (`auto-trader`), paper or live.
-3. During the day: `price-alerts`, `auto-trader` for status.
-4. Evening: `trade-journal`, and `pivot-levels` for tomorrow.
-5. Weekend: `relative-strength` / `stock-screener` to refresh the watchlist,
+3. Before taking a discretionary trade: `trade-odds`, then `risk-manager`.
+4. During the day: `price-alerts`, `auto-trader` for status.
+5. Evening: `trade-journal`, and `pivot-levels` for tomorrow.
+6. Weekend: `relative-strength` / `stock-screener` to refresh the watchlist,
    `strategy-backtester` if anything changed.
 
 ## What the skills will not do

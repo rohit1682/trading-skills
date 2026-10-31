@@ -23,7 +23,11 @@ python -m growwbot backtest --all --split 0.7          # compare strategies with
 python -m growwbot backtest --strategy orb --days 59   # intraday
 python -m growwbot optimize --strategy ema_trend       # walk-forward tuning
 python -m growwbot montecarlo --strategy ema_trend     # drawdown and streak odds
+python -m growwbot odds RELIANCE --strategy ema_trend  # the odds on one specific planned trade
 ```
+
+`backtest` and `montecarlo` judge a strategy over many trades. `odds` judges
+the single trade in front of you ([trade-odds](../skills/trade-odds/SKILL.md)).
 
 Outputs go to `state/backtests/` (trade list + equity curve CSVs).
 
@@ -38,6 +42,7 @@ pass `--csv-dir`.
 | metric | what to look for |
 | --- | --- |
 | trades | 30+ before trusting anything; 100+ is better |
+| win_rate_pct vs breakeven_win_rate_pct | the one that matters. With `avg_win_r` 2.0 and `avg_loss_r` -1.0 you only need 33 % winners, so a 40 % win rate is a real edge and a 60 % win rate on tiny winners may not be |
 | profit factor (after costs) | > 1.3 is interesting, > 2 on few trades is usually luck |
 | max drawdown | within what you can sit through without quitting |
 | out-of-sample vs in-sample | similar = robust; much worse = overfit |

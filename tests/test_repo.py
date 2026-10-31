@@ -15,7 +15,7 @@ def _commands():
 
 
 def test_every_skill_has_frontmatter():
-    assert len(SKILLS) >= 17
+    assert len(SKILLS) >= 18
     for d in SKILLS:
         text = (d / "SKILL.md").read_text(encoding="utf-8")
         m = re.match(r"---\nname: (\S+)\ndescription: >-\n(.+?)\n---\n", text, re.S)

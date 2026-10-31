@@ -35,7 +35,8 @@ Common options: `--source auto|groww|yfinance|csv`, `--csv-dir DIR` (files named
 | --- | --- |
 | `backtest [--strategy NAME \| --all] [--symbols ...] [--days N] [--split 0.7] [--capital X] [--no-regime]` | portfolio backtest with charges and risk rules |
 | `optimize --strategy NAME [--grid "k=a,b k2=c,d"] [--folds 4] [--days N]` | walk-forward optimisation |
-| `montecarlo [--trades-csv FILE \| --strategy NAME] [--risk PCT] [--n TRADES] [--sims N]` | drawdown / streak odds |
+| `montecarlo [--trades-csv FILE \| --strategy NAME] [--risk PCT] [--n TRADES] [--sims N]` | drawdown / streak odds across many trades |
+| `odds SYMBOL [--entry P --stop P --target P \| --rr R] [--strategy NAME] [--hold N] [--sims N] [--seed N]` | replay ONE planned trade: target first, stop first or neither |
 | `costs --buy P [--sell P] --qty N [--intraday]` | Groww charges and breakeven move |
 
 ## Trading

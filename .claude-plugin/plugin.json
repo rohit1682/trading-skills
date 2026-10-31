@@ -1,7 +1,7 @@
 {
   "name": "trading-skills",
-  "version": "0.2.0",
-  "description": "17 Claude skills for trading NSE stocks through the Groww Trade API: regime, screening, analysis, backtesting, walk-forward, risk, execution and automation. Paper trading by default.",
+  "version": "0.3.0",
+  "description": "18 Claude skills for trading NSE stocks through the Groww Trade API: regime, screening, analysis, backtesting, walk-forward, risk, execution and automation. Paper trading by default.",
   "license": "MIT",
   "skills": "./skills/",
   "author": {

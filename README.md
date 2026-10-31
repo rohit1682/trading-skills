@@ -1,8 +1,8 @@
 # trading-skills
 
-**Owner:** Rohit Ghosh ([@rohit1682](https://github.com/rohit1682)) · MIT licence · v0.2.0
+**Owner:** Rohit Ghosh ([@rohit1682](https://github.com/rohit1682)) · MIT licence · v0.3.0
 
-17 Claude skills plus a Python engine (`growwbot`) for trading NSE stocks
+18 Claude skills plus a Python engine (`growwbot`) for trading NSE stocks
 through your **Groww** account with proven technical indicators: EMA, RSI,
 MACD, ADX, Supertrend, ATR, Bollinger Bands, VWAP, Donchian channels, pivots
 and CPR.
@@ -33,7 +33,8 @@ orders after three separate opt-ins.
 | | [`pivot-levels`](skills/pivot-levels/SKILL.md) | Pivots, CPR, Camarilla, swing support/resistance |
 | | [`portfolio-review`](skills/portfolio-review/SKILL.md) | Groww holdings health check: trend, weight, suggested stops (read-only) |
 | | [`price-alerts`](skills/price-alerts/SKILL.md) | Price/RSI alerts in the console or Telegram |
-| Testing | [`strategy-backtester`](skills/strategy-backtester/SKILL.md) | Backtest with Groww charges, slippage, gap-through stops, risk rules, out-of-sample |
+| Testing | [`trade-odds`](skills/trade-odds/SKILL.md) | Replay one planned trade 10,000 times: target first, stop first, or neither, against its break-even win rate |
+| | [`strategy-backtester`](skills/strategy-backtester/SKILL.md) | Backtest with Groww charges, slippage, gap-through stops, risk rules, out-of-sample |
 | | [`strategy-optimizer`](skills/strategy-optimizer/SKILL.md) | Walk-forward tuning that exposes curve-fitting |
 | | [`risk-of-ruin`](skills/risk-of-ruin/SKILL.md) | Monte Carlo drawdown, losing-streak and ruin odds |
 | Trading | [`risk-manager`](skills/risk-manager/SKILL.md) | Position sizing, PASS/BLOCK checks, kill switch |
@@ -132,7 +133,7 @@ Or as a Claude Code plugin once pushed to GitHub:
 ```
 growwbot/            Python engine: indicators, strategies, risk, costs, backtest,
                      analytics, alerts, broker (paper/live), engine, CLI
-skills/              the 17 Claude skills (one SKILL.md each)
+skills/              the 18 Claude skills (one SKILL.md each)
 docs/                12 guides
 universes/           symbol lists (NIFTY 50, Bank NIFTY)
 tests/               pytest suite: no network, fake Groww SDK for the live path
@@ -146,8 +147,11 @@ config.example.toml  settings template      .env.example  secrets template
 
 Ideas drawn from [tradermonty/claude-trading-skills](https://github.com/rohit1682/claude-trading-skills)
 (risk-first workflows, honest backtest criteria),
-[day-trader-skill](https://github.com/rohit1682/day-trader-skill) (paper by
-default, a risk gate before the broker, never trade without a yes), the
+[Jake Schincariol's day-trader-skill](https://github.com/jakeschincariol/day-trader-skill),
+MIT (paper by default, a risk gate before the broker, never trade without a
+yes, and the "time machine" idea behind `trade-odds`: time-of-day-matched
+bootstrap replays judged against the break-even win rate; the code here is
+our own), the
 finance skills on claudemarketplaces.com, Groww's Trade API docs and pricing,
 SEBI's FY23 intraday study and retail-algo framework, and the indicator
 literature (Wilder, Appel, Connors, Donchian, Seykota/Turtles).

@@ -12,7 +12,7 @@ import pandas as pd
 
 from . import backtest as bt
 from . import broker as brk
-from . import alerts, analytics, config, data, indicators, risk, strategies
+from . import alerts, analytics, config, data, indicators, odds as odds_mod, risk, strategies
 from .costs import CostModel
 from .engine import Engine, now_ist
 
@@ -213,7 +213,8 @@ def cmd_backtest(args, cfg):
         print(pd.DataFrame(summary)[cols].to_string(index=False))
     if not args.json:
         print("\nRead this honestly: fewer than ~30 trades is noise; a profit factor under ~1.3 after costs is fragile;"
-              " if out-of-sample is much worse than in-sample, the rules are overfit. " + DISCLAIMER)
+              " if out-of-sample is much worse than in-sample, the rules are overfit. Compare win_rate_pct with"
+              " breakeven_win_rate_pct: a 35% win rate is fine if the winners are big enough. " + DISCLAIMER)
     return 0
 
 
@@ -237,6 +238,8 @@ def cmd_size(args, cfg):
         "reward_risk": round((args.target - args.entry) / (args.entry - args.stop), 2) if args.target and args.entry > args.stop else None,
         "risk_budget": round(cfg.capital * rm.cfg["risk_per_trade_pct"] / 100, 2),
     }
+    if out["reward_risk"]:
+        out["breakeven_win_rate_pct"] = round(100 / (1 + out["reward_risk"]), 1)
     _print(out, args.json)
     return 0 if dec.ok else 2
 
@@ -571,6 +574,83 @@ def cmd_install_skills(args, cfg):
     print("Re-run after `git pull` to pick up skill updates.")
 
 
+
+def cmd_odds(args, cfg):
+    """Replay one planned trade against the stock's own recent bars."""
+    sym = args.symbol.upper()
+    strat = strategies.get(args.strategy) if args.strategy else None
+    interval = args.interval or (strat.interval if strat else "1day")
+    intraday = data.is_intraday(interval)
+    days = args.days or (59 if intraday else 730)
+    csv = f"{args.csv_dir}/{sym}_{interval}.csv" if args.csv_dir else None
+    df = data.completed_bars(data.load(sym, interval, days, args.source, csv=csv), interval, now_ist())
+    if len(df) < 60:
+        print(f"Not enough {interval} history for {sym} ({len(df)} bars).")
+        return 1
+
+    entry, stop, target = args.entry, args.stop, args.target
+    if strat and (entry is None or stop is None):
+        sig = strat.signals(df, **(cfg.strategy.get("params", {}) if strat.name == cfg.strategy["name"] else {})).iloc[-1]
+        if not bool(sig["entry"]) and entry is None:
+            print(f"{strat.name} has no entry signal on {sym}'s last completed bar "
+                  f"({df.index[-1]}). Pass --entry/--stop to price a trade anyway.")
+            return 1
+        entry = entry if entry is not None else float(df["close"].iloc[-1])
+        stop = stop if stop is not None else float(sig["stop"])
+        if target is None and not math.isnan(float(sig["target"])):
+            target = float(sig["target"])
+    if entry is None or stop is None:
+        print("Need --entry and --stop (or --strategy to take them from the latest signal).")
+        return 1
+    if target is None:
+        target = entry + args.rr * (entry - stop)
+
+    now = args.now or now_ist()
+    bars = args.bars or odds_mod.bars_remaining(
+        interval, now, str(cfg.risk.get("squareoff_time", "15:10")), args.hold)
+    start_slot = 0
+    if intraday:
+        today = df[df.index.date == df.index[-1].date()]
+        start_slot = len(today)
+    pools = odds_mod.build_pools(df, intraday, window=args.window)
+    out = odds_mod.replay(pools, entry, stop, target, bars, sims=args.sims, seed=args.seed,
+                          start_slot=start_slot)
+    out["symbol"] = sym
+    out["interval"] = interval
+    out["history_bars"] = len(df)
+    if strat:
+        out["precedent"] = odds_mod.precedent(
+            sym, df, strat, cfg.strategy.get("params", {}) if strat.name == cfg.strategy["name"] else {},
+            cfg.risk, CostModel.from_dict(cfg.costs), capital=cfg.capital)
+        odds_mod.reconcile(out, out["precedent"])
+
+    if args.json:
+        _print(out, True)
+        return
+    horizon = f"{bars} bars to {cfg.risk.get('squareoff_time', '15:10')}" if intraday else f"{bars} bars held"
+    print(f"{sym} {interval}: buy {out['entry']}, stop {out['stop']}, target {out['target']} "
+          f"({out['reward_risk']}R, Rs {out['risk_per_share']}/share at risk)")
+    print(f"{out['sims']:,} replays from {out['history_bars']} of its own bars, {horizon}, seed {out['seed']}")
+    for k, label in (("target_first_pct", "target first"), ("stop_first_pct", "stop first"),
+                     ("neither_pct", "neither"), ("green_pct", "green at the end")):
+        print(f"  {label:<18} {out[k]:>5} %")
+    pe = out["exit_price"]
+    print(f"  exit or final px  median {pe['median']}, 90% between {pe['p5']} and {pe['p95']}")
+    print(f"  average R          {out['avg_r']:+}")
+    if out.get("precedent"):
+        p = out["precedent"]
+        if p["trades"]:
+            print(f"History: {strat.name} fired {p['trades']} times on {sym} ({p['first']} to {p['last']}): "
+                  f"{p['win_rate_pct']}% winners, average {p['avg_r']:+}R, best {p['best_r']}R, worst {p['worst_r']}R.")
+        else:
+            print(f"History: {p['note']}")
+    print(f"\n{out['verdict']}")
+    for n in out.get("notes", []):
+        print(f"  {n}")
+    print("\nBuilt from recent bars, not a prediction: results, news and circuit limits do things "
+          "the sample never did. " + DISCLAIMER)
+
+
 # ----------------------------------------------------------------------------- parser
 
 def build_parser() -> argparse.ArgumentParser:
@@ -641,6 +721,15 @@ def build_parser() -> argparse.ArgumentParser:
     sp = research("montecarlo", cmd_montecarlo, "drawdown / losing-streak odds from a trade list")
     sp.add_argument("--trades-csv"); sp.add_argument("--strategy"); sp.add_argument("--universe", nargs="*", default=["watchlist"])
     sp.add_argument("--risk", type=float); sp.add_argument("--n", type=int); sp.add_argument("--sims", type=int, default=5000)
+    sp = research("odds", cmd_odds, "replay one planned trade thousands of times before you take it")
+    sp.add_argument("symbol"); sp.add_argument("--entry", type=float); sp.add_argument("--stop", type=float)
+    sp.add_argument("--target", type=float); sp.add_argument("--rr", type=float, default=2.0)
+    sp.add_argument("--strategy"); sp.add_argument("--interval"); sp.add_argument("--days", type=int)
+    sp.add_argument("--bars", type=int, help="bars to simulate (default: to square-off intraday, else --hold)")
+    sp.add_argument("--hold", type=int, default=20, help="holding horizon in bars for daily strategies")
+    sp.add_argument("--sims", type=int, default=10000); sp.add_argument("--seed", type=int, default=19)
+    sp.add_argument("--window", type=int, default=2, help="time-of-day slots either side to sample from")
+    sp.add_argument("--now", type=datetime.fromisoformat)
     sp = research("optimize", cmd_optimize, "walk-forward parameter search, judged out of sample")
     sp.add_argument("--strategy"); sp.add_argument("--grid"); sp.add_argument("--folds", type=int, default=4)
     sp.add_argument("--universe", nargs="*", default=["watchlist"]); sp.add_argument("--days", type=int)
