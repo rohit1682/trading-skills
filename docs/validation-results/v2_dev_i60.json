@@ -1,0 +1,312 @@
+[
+ {
+  "trades": 376,
+  "win_rate_pct": 21.0,
+  "breakeven_win_rate_pct": 50.7,
+  "avg_win_r": 0.44,
+  "avg_loss_r": -0.45,
+  "profit_factor": 0.26,
+  "total_costs": 8152.62,
+  "net_pnl": -11273.38,
+  "total_return_pct": -22.55,
+  "cagr_pct": -11.66,
+  "max_drawdown_pct": -22.56,
+  "sharpe": -5.81,
+  "exp_r": -0.27,
+  "sd_r": 0.47,
+  "t_stat": -11.21,
+  "ci95_r": [
+   -0.317,
+   -0.221
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": -5.25,
+  "buy_hold": {
+   "total_return_pct": 32.04,
+   "cagr_pct": 14.43,
+   "max_drawdown_pct": -14.85,
+   "sharpe": 1.23
+  },
+  "blocked_by": {
+   "charges": 1497,
+   "market": 898,
+   "outside": 532,
+   "position": 140,
+   "already": 103,
+   "reward:risk": 75,
+   "trading": 36,
+   "4": 32
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -44.13,
+    "median": -39.86,
+    "p95": -35.14
+   },
+   "max_drawdown_pct": {
+    "median": -40.02,
+    "p95_worst": -44.27,
+    "p99_worst": -45.53
+   },
+   "prob_losing_money_pct": 100.0,
+   "losing_streak": {
+    "median": 20,
+    "p95": 29
+   }
+  },
+  "strategy": "vwap_pullback",
+  "universe": "watchlist",
+  "symbols": [
+   "AXISBANK",
+   "BHARTIARTL",
+   "HDFCBANK",
+   "HINDUNILVR",
+   "ICICIBANK",
+   "INFY",
+   "ITC",
+   "KOTAKBANK",
+   "LT",
+   "MARUTI",
+   "RELIANCE",
+   "SBIN",
+   "SUNPHARMA",
+   "TCS",
+   "TITAN"
+  ],
+  "window": "2023-11-01:2025-12-10",
+  "capital": 50000,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1hour"
+ },
+ {
+  "trades": 335,
+  "win_rate_pct": 23.6,
+  "breakeven_win_rate_pct": 53.7,
+  "avg_win_r": 0.43,
+  "avg_loss_r": -0.5,
+  "profit_factor": 0.28,
+  "total_costs": 7356.91,
+  "net_pnl": -10580.08,
+  "total_return_pct": -21.16,
+  "cagr_pct": -10.89,
+  "max_drawdown_pct": -21.17,
+  "sharpe": -4.92,
+  "exp_r": -0.288,
+  "sd_r": 0.54,
+  "t_stat": -9.71,
+  "ci95_r": [
+   -0.346,
+   -0.228
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": -6.24,
+  "buy_hold": {
+   "total_return_pct": 32.04,
+   "cagr_pct": 14.43,
+   "max_drawdown_pct": -14.85,
+   "sharpe": 1.23
+  },
+  "blocked_by": {
+   "charges": 970,
+   "market": 454,
+   "already": 90,
+   "position": 85,
+   "4": 3
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -43.41,
+    "median": -38.46,
+    "p95": -33.29
+   },
+   "max_drawdown_pct": {
+    "median": -38.65,
+    "p95_worst": -43.45,
+    "p99_worst": -45.4
+   },
+   "prob_losing_money_pct": 100.0,
+   "losing_streak": {
+    "median": 17,
+    "p95": 27
+   }
+  },
+  "strategy": "vwap_pullback_v2",
+  "universe": "watchlist",
+  "symbols": [
+   "AXISBANK",
+   "BHARTIARTL",
+   "HDFCBANK",
+   "HINDUNILVR",
+   "ICICIBANK",
+   "INFY",
+   "ITC",
+   "KOTAKBANK",
+   "LT",
+   "MARUTI",
+   "RELIANCE",
+   "SBIN",
+   "SUNPHARMA",
+   "TCS",
+   "TITAN"
+  ],
+  "window": "2023-11-01:2025-12-10",
+  "capital": 50000,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1hour"
+ },
+ {
+  "trades": 105,
+  "win_rate_pct": 27.6,
+  "breakeven_win_rate_pct": 51.6,
+  "avg_win_r": 0.45,
+  "avg_loss_r": -0.48,
+  "profit_factor": 0.33,
+  "total_costs": 2473.99,
+  "net_pnl": -3058.73,
+  "total_return_pct": -6.12,
+  "cagr_pct": -3.02,
+  "max_drawdown_pct": -6.12,
+  "sharpe": -2.85,
+  "exp_r": -0.222,
+  "sd_r": 0.53,
+  "t_stat": -4.31,
+  "ci95_r": [
+   -0.317,
+   -0.115
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": -0.04,
+  "buy_hold": {
+   "total_return_pct": 32.04,
+   "cagr_pct": 14.43,
+   "max_drawdown_pct": -14.85,
+   "sharpe": 1.23
+  },
+  "blocked_by": {
+   "charges": 122,
+   "market": 79,
+   "position": 9,
+   "already": 5,
+   "reward:risk": 2
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -14.78,
+    "median": -11.16,
+    "p95": -7.02
+   },
+   "max_drawdown_pct": {
+    "median": -11.49,
+    "p95_worst": -15.05,
+    "p99_worst": -16.33
+   },
+   "prob_losing_money_pct": 100.0,
+   "losing_streak": {
+    "median": 11,
+    "p95": 18
+   }
+  },
+  "strategy": "orb",
+  "universe": "watchlist",
+  "symbols": [
+   "AXISBANK",
+   "BHARTIARTL",
+   "HDFCBANK",
+   "HINDUNILVR",
+   "ICICIBANK",
+   "INFY",
+   "ITC",
+   "KOTAKBANK",
+   "LT",
+   "MARUTI",
+   "RELIANCE",
+   "SBIN",
+   "SUNPHARMA",
+   "TCS",
+   "TITAN"
+  ],
+  "window": "2023-11-01:2025-12-10",
+  "capital": 50000,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1hour"
+ },
+ {
+  "trades": 265,
+  "win_rate_pct": 28.7,
+  "breakeven_win_rate_pct": 54.6,
+  "avg_win_r": 0.34,
+  "avg_loss_r": -0.41,
+  "profit_factor": 0.36,
+  "total_costs": 5864.79,
+  "net_pnl": -6941.9,
+  "total_return_pct": -13.88,
+  "cagr_pct": -6.99,
+  "max_drawdown_pct": -14.04,
+  "sharpe": -3.9,
+  "exp_r": -0.203,
+  "sd_r": 0.46,
+  "t_stat": -7.15,
+  "ci95_r": [
+   -0.257,
+   -0.149
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": 3.03,
+  "buy_hold": {
+   "total_return_pct": 32.04,
+   "cagr_pct": 14.43,
+   "max_drawdown_pct": -14.85,
+   "sharpe": 1.23
+  },
+  "blocked_by": {
+   "market": 130,
+   "charges": 72,
+   "already": 36,
+   "position": 18
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -28.09,
+    "median": -23.69,
+    "p95": -18.85
+   },
+   "max_drawdown_pct": {
+    "median": -23.95,
+    "p95_worst": -28.2,
+    "p99_worst": -30.43
+   },
+   "prob_losing_money_pct": 100.0,
+   "losing_streak": {
+    "median": 13,
+    "p95": 20
+   }
+  },
+  "strategy": "orb_v2",
+  "universe": "watchlist",
+  "symbols": [
+   "AXISBANK",
+   "BHARTIARTL",
+   "HDFCBANK",
+   "HINDUNILVR",
+   "ICICIBANK",
+   "INFY",
+   "ITC",
+   "KOTAKBANK",
+   "LT",
+   "MARUTI",
+   "RELIANCE",
+   "SBIN",
+   "SUNPHARMA",
+   "TCS",
+   "TITAN"
+  ],
+  "window": "2023-11-01:2025-12-10",
+  "capital": 50000,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1hour"
+ }
+]

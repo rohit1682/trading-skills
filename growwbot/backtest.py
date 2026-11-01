@@ -129,7 +129,7 @@ def run(
     are warmed up); trading only happens between ``start`` and ``end``."""
     costs = costs or CostModel()
     params = params or {}
-    rm = RiskManager(risk_cfg, capital=initial_capital, persist=False)
+    rm = RiskManager(risk_cfg, capital=initial_capital, persist=False, costs=costs)
     slip = slippage_pct / 100.0
     intraday = strategy.intraday
 

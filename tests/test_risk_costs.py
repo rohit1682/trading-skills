@@ -40,7 +40,16 @@ def test_intraday_window():
     assert not rm().check_entry("SBIN", 800, 790, None, early, 0, True).ok
     assert not rm().check_entry("SBIN", 800, 790, None, late, 0, True).ok
     assert rm().check_entry("SBIN", 800, 790, None, T, 0, True).ok
-    assert rm().check_entry("SBIN", 800, 790, None, late, 0, False).ok  # window is intraday-only
+    assert rm().check_entry("SBIN", 800, 760, None, late, 0, False).ok  # window is intraday-only
+
+
+def test_cost_gate_blocks_trades_too_small_for_the_fees():
+    # Delivery, Rs 250 at risk on a Rs 20k position: ~Rs 115 of charges (46 % of the risk) -> blocked.
+    d = rm().check_entry("SBIN", 800, 790, None, T, 0, False)
+    assert not d.ok and any("charges" in x for x in d.reasons)
+    assert rm(max_cost_pct_of_risk=0).check_entry("SBIN", 800, 790, None, T, 0, False).ok
+    # Same trade intraday: no STT on the buy, no DP charge -> passes.
+    assert rm().check_entry("SBIN", 800, 790, None, T, 0, True).ok
 
 
 def test_daily_limits_and_consecutive_losses():

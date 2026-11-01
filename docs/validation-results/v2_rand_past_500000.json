@@ -1,0 +1,826 @@
+[
+ {
+  "trades": 146,
+  "win_rate_pct": 39.7,
+  "breakeven_win_rate_pct": 28.7,
+  "avg_win_r": 1.78,
+  "avg_loss_r": -0.72,
+  "profit_factor": 1.62,
+  "total_costs": 25803.0,
+  "net_pnl": 107108.54,
+  "total_return_pct": 21.42,
+  "cagr_pct": 1.78,
+  "max_drawdown_pct": -4.94,
+  "sharpe": 0.8,
+  "exp_r": 0.275,
+  "sd_r": 1.31,
+  "t_stat": 2.54,
+  "ci95_r": [
+   0.06,
+   0.493
+  ],
+  "trades_needed_t2": 91,
+  "gross_return_pct": 29.32,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 140,
+   "market": 83,
+   "reward:risk": 32,
+   "already": 8
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": 7.4,
+    "median": 22.0,
+    "p95": 39.37
+   },
+   "max_drawdown_pct": {
+    "median": -3.74,
+    "p95_worst": -6.54,
+    "p99_worst": -8.7
+   },
+   "prob_losing_money_pct": 0.4,
+   "losing_streak": {
+    "median": 8,
+    "p95": 13
+   }
+  },
+  "strategy": "ema_trend",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 88,
+  "win_rate_pct": 47.7,
+  "breakeven_win_rate_pct": 33.5,
+  "avg_win_r": 1.19,
+  "avg_loss_r": -0.6,
+  "profit_factor": 1.84,
+  "total_costs": 12256.73,
+  "net_pnl": 59144.24,
+  "total_return_pct": 11.83,
+  "cagr_pct": 1.02,
+  "max_drawdown_pct": -4.17,
+  "sharpe": 0.52,
+  "exp_r": 0.255,
+  "sd_r": 1.22,
+  "t_stat": 1.95,
+  "ci95_r": [
+   0.014,
+   0.511
+  ],
+  "trades_needed_t2": 93,
+  "gross_return_pct": 15.31,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 111,
+   "market": 29,
+   "already": 13,
+   "position": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": 1.58,
+    "median": 11.27,
+    "p95": 22.67
+   },
+   "max_drawdown_pct": {
+    "median": -2.68,
+    "p95_worst": -5.06,
+    "p99_worst": -6.51
+   },
+   "prob_losing_money_pct": 2.5,
+   "losing_streak": {
+    "median": 6,
+    "p95": 10
+   }
+  },
+  "strategy": "ema_trend_v2",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 449,
+  "win_rate_pct": 31.2,
+  "breakeven_win_rate_pct": 31.2,
+  "avg_win_r": 1.16,
+  "avg_loss_r": -0.53,
+  "profit_factor": 0.99,
+  "total_costs": 81844.79,
+  "net_pnl": -6188.35,
+  "total_return_pct": -1.24,
+  "cagr_pct": -0.11,
+  "max_drawdown_pct": -14.98,
+  "sharpe": -0.02,
+  "exp_r": 0.0,
+  "sd_r": 0.95,
+  "t_stat": 0.01,
+  "ci95_r": [
+   -0.087,
+   0.087
+  ],
+  "trades_needed_t2": 22580053,
+  "gross_return_pct": 17.69,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 587,
+   "already": 205,
+   "market": 171,
+   "reward:risk": 101,
+   "would": 4
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -15.75,
+    "median": -0.7,
+    "p95": 17.68
+   },
+   "max_drawdown_pct": {
+    "median": -10.56,
+    "p95_worst": -19.71,
+    "p99_worst": -24.17
+   },
+   "prob_losing_money_pct": 52.8,
+   "losing_streak": {
+    "median": 14,
+    "p95": 20
+   }
+  },
+  "strategy": "macd_momentum",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 118,
+  "win_rate_pct": 39.8,
+  "breakeven_win_rate_pct": 32.3,
+  "avg_win_r": 0.97,
+  "avg_loss_r": -0.47,
+  "profit_factor": 1.38,
+  "total_costs": 16691.41,
+  "net_pnl": 32849.4,
+  "total_return_pct": 6.57,
+  "cagr_pct": 0.58,
+  "max_drawdown_pct": -6.23,
+  "sharpe": 0.32,
+  "exp_r": 0.108,
+  "sd_r": 0.97,
+  "t_stat": 1.21,
+  "ci95_r": [
+   -0.057,
+   0.295
+  ],
+  "trades_needed_t2": 323,
+  "gross_return_pct": 10.51,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 157,
+   "market": 63,
+   "already": 27
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -1.9,
+    "median": 6.32,
+    "p95": 16.32
+   },
+   "max_drawdown_pct": {
+    "median": -3.19,
+    "p95_worst": -6.18,
+    "p99_worst": -7.55
+   },
+   "prob_losing_money_pct": 11.4,
+   "losing_streak": {
+    "median": 8,
+    "p95": 13
+   }
+  },
+  "strategy": "macd_momentum_v2",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 237,
+  "win_rate_pct": 31.6,
+  "breakeven_win_rate_pct": 29.5,
+  "avg_win_r": 2.18,
+  "avg_loss_r": -0.92,
+  "profit_factor": 1.09,
+  "total_costs": 39839.57,
+  "net_pnl": 32831.47,
+  "total_return_pct": 6.57,
+  "cagr_pct": 0.58,
+  "max_drawdown_pct": -12.33,
+  "sharpe": 0.15,
+  "exp_r": 0.065,
+  "sd_r": 1.99,
+  "t_stat": 0.5,
+  "ci95_r": [
+   -0.179,
+   0.326
+  ],
+  "trades_needed_t2": 3741,
+  "gross_return_pct": 14.87,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 1138,
+   "already": 521,
+   "market": 142,
+   "would": 12,
+   "stop": 4
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -17.14,
+    "median": 6.14,
+    "p95": 36.82
+   },
+   "max_drawdown_pct": {
+    "median": -12.35,
+    "p95_worst": -23.03,
+    "p99_worst": -27.05
+   },
+   "prob_losing_money_pct": 35.2,
+   "losing_streak": {
+    "median": 12,
+    "p95": 19
+   }
+  },
+  "strategy": "donchian_breakout",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 127,
+  "win_rate_pct": 35.4,
+  "breakeven_win_rate_pct": 23.6,
+  "avg_win_r": 2.74,
+  "avg_loss_r": -0.85,
+  "profit_factor": 1.71,
+  "total_costs": 18964.47,
+  "net_pnl": 138274.24,
+  "total_return_pct": 27.65,
+  "cagr_pct": 2.25,
+  "max_drawdown_pct": -9.14,
+  "sharpe": 0.65,
+  "exp_r": 0.424,
+  "sd_r": 2.73,
+  "t_stat": 1.75,
+  "ci95_r": [
+   -0.012,
+   0.934
+  ],
+  "trades_needed_t2": 167,
+  "gross_return_pct": 30.96,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 1065,
+   "already": 851,
+   "market": 122,
+   "would": 5,
+   "stop": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": 1.75,
+    "median": 28.76,
+    "p95": 68.63
+   },
+   "max_drawdown_pct": {
+    "median": -6.2,
+    "p95_worst": -11.63,
+    "p99_worst": -14.46
+   },
+   "prob_losing_money_pct": 3.8,
+   "losing_streak": {
+    "median": 9,
+    "p95": 15
+   }
+  },
+  "strategy": "donchian_breakout_v2",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 691,
+  "win_rate_pct": 63.2,
+  "breakeven_win_rate_pct": 60.4,
+  "avg_win_r": 0.3,
+  "avg_loss_r": -0.45,
+  "profit_factor": 1.11,
+  "total_costs": 103972.42,
+  "net_pnl": 32134.72,
+  "total_return_pct": 6.43,
+  "cagr_pct": 0.57,
+  "max_drawdown_pct": -5.29,
+  "sharpe": 0.28,
+  "exp_r": 0.018,
+  "sd_r": 0.5,
+  "t_stat": 0.94,
+  "ci95_r": [
+   -0.019,
+   0.056
+  ],
+  "trades_needed_t2": 3098,
+  "gross_return_pct": 36.46,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 1762,
+   "market": 817,
+   "already": 426,
+   "would": 36,
+   "stop": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -4.59,
+    "median": 6.2,
+    "p95": 18.49
+   },
+   "max_drawdown_pct": {
+    "median": -5.28,
+    "p95_worst": -10.27,
+    "p99_worst": -12.86
+   },
+   "prob_losing_money_pct": 19.6,
+   "losing_streak": {
+    "median": 6,
+    "p95": 9
+   }
+  },
+  "strategy": "rsi2_reversion",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 349,
+  "win_rate_pct": 60.5,
+  "breakeven_win_rate_pct": 58.1,
+  "avg_win_r": 0.27,
+  "avg_loss_r": -0.37,
+  "profit_factor": 1.08,
+  "total_costs": 47002.95,
+  "net_pnl": 10598.06,
+  "total_return_pct": 2.12,
+  "cagr_pct": 0.19,
+  "max_drawdown_pct": -5.4,
+  "sharpe": 0.16,
+  "exp_r": 0.013,
+  "sd_r": 0.41,
+  "t_stat": 0.59,
+  "ci95_r": [
+   -0.03,
+   0.055
+  ],
+  "trades_needed_t2": 3970,
+  "gross_return_pct": 14.01,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 751,
+   "market": 390,
+   "already": 91,
+   "would": 7
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -3.96,
+    "median": 2.29,
+    "p95": 8.82
+   },
+   "max_drawdown_pct": {
+    "median": -3.41,
+    "p95_worst": -6.89,
+    "p99_worst": -8.74
+   },
+   "prob_losing_money_pct": 27.6,
+   "losing_streak": {
+    "median": 6,
+    "p95": 8
+   }
+  },
+  "strategy": "rsi2_reversion_v2",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 81,
+  "win_rate_pct": 40.7,
+  "breakeven_win_rate_pct": 32.8,
+  "avg_win_r": 1.28,
+  "avg_loss_r": -0.62,
+  "profit_factor": 1.41,
+  "total_costs": 10146.85,
+  "net_pnl": 31221.74,
+  "total_return_pct": 6.24,
+  "cagr_pct": 0.55,
+  "max_drawdown_pct": -3.68,
+  "sharpe": 0.37,
+  "exp_r": 0.15,
+  "sd_r": 1.12,
+  "t_stat": 1.21,
+  "ci95_r": [
+   -0.085,
+   0.401
+  ],
+  "trades_needed_t2": 224,
+  "gross_return_pct": 8.98,
+  "buy_hold": {
+   "total_return_pct": 1220.26,
+   "cagr_pct": 26.47,
+   "max_drawdown_pct": -42.97,
+   "sharpe": 1.31
+  },
+  "blocked_by": {
+   "price": 140,
+   "market": 32,
+   "already": 11,
+   "reward:risk": 7,
+   "stop": 1,
+   "position": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -2.28,
+    "median": 5.86,
+    "p95": 15.23
+   },
+   "max_drawdown_pct": {
+    "median": -3.24,
+    "p95_worst": -6.51,
+    "p99_worst": -8.25
+   },
+   "prob_losing_money_pct": 12.3,
+   "losing_streak": {
+    "median": 7,
+    "p95": 12
+   }
+  },
+  "strategy": "supertrend_adx",
+  "universe": "random:30:2026",
+  "symbols": [
+   "ADANIENT",
+   "APOLLOHOSP",
+   "ASIANPAINT",
+   "BAJAJFINSV",
+   "BAJFINANCE",
+   "BEL",
+   "BEML",
+   "COLPAL",
+   "CUMMINSIND",
+   "DABUR",
+   "GAIL",
+   "IGL",
+   "JINDALSTEL",
+   "JSWENERGY",
+   "MANAPPURAM",
+   "MARICO",
+   "MOTHERSON",
+   "NATIONALUM",
+   "NESTLEIND",
+   "NHPC",
+   "OIL",
+   "PAGEIND",
+   "PETRONET",
+   "RECLTD",
+   "RPOWER",
+   "SHRIRAMFIN",
+   "TATACOMM",
+   "TORNTPHARM",
+   "TVSMOTOR",
+   "VEDL"
+  ],
+  "window": "2010-01-01:2021-01-01",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ }
+]

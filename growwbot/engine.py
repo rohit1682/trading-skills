@@ -23,6 +23,7 @@ import pandas as pd
 
 from . import config, data, risk, strategies
 from .backtest import regime_series
+from .costs import CostModel
 
 IST = ZoneInfo("Asia/Kolkata")
 MARKET_OPEN, MARKET_CLOSE = time(9, 15), time(15, 30)
@@ -48,7 +49,8 @@ class Engine:
         self.mode = "live" if broker.live else "paper"
         self.strategy = strategies.get(cfg.strategy.get("name", "supertrend_adx"))
         self.params = cfg.strategy.get("params", {}) or {}
-        self.rm = risk.RiskManager(cfg.risk, capital=cfg.capital, persist=True)
+        self.rm = risk.RiskManager(cfg.risk, capital=cfg.capital, persist=True,
+                                     costs=CostModel.from_dict(cfg.costs))
         self.state_path = config.state_dir() / f"positions_{self.mode}.json"
         self.journal_path = config.state_dir() / f"journal_{self.mode}.csv"
         self.state = self._load()

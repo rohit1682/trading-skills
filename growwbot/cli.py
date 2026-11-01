@@ -221,7 +221,7 @@ def cmd_backtest(args, cfg):
 # ----------------------------------------------------------------------------- risk / orders
 
 def cmd_size(args, cfg):
-    rm = risk.RiskManager(cfg.risk, capital=cfg.capital, persist=True)
+    rm = risk.RiskManager(cfg.risk, capital=cfg.capital, persist=True, costs=CostModel.from_dict(cfg.costs))
     eng_positions = Engine(cfg, brk.PaperBroker(cfg) if not args.live else brk.make_broker(cfg, True), log=lambda *_: None).positions
     dec = rm.check_entry(args.symbol.upper(), args.entry, args.stop, args.target, args.now or now_ist(),
                          len(eng_positions), args.intraday, cash=cfg.capital,
@@ -517,7 +517,7 @@ def cmd_plan(args, cfg):
     else:
         reg = {"suggested_risk_multiplier": 1.0}
         lines += ["## Market regime", "NIFTY data unavailable.", ""]
-    rm_ = risk.RiskManager(cfg.risk, capital=cfg.capital, persist=True)
+    rm_ = risk.RiskManager(cfg.risk, capital=cfg.capital, persist=True, costs=CostModel.from_dict(cfg.costs))
     budget = cfg.capital * rm_.cfg["risk_per_trade_pct"] / 100 * reg["suggested_risk_multiplier"]
     lines += ["## Risk budget",
               f"- Capital Rs {cfg.capital:,.0f}; risk per trade Rs {budget:,.0f} after the regime multiplier",

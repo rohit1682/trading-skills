@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- Six v2 strategies (`ema_trend_v2`, `macd_momentum_v2`, `donchian_breakout_v2`,
+  `rsi2_reversion_v2`, `vwap_pullback_v2`, `orb_v2`) rewritten from why v1
+  lost, then tested on 30 random other stocks (2010-2020) and on 2021-2026:
+  `docs/15-strategy-v2.md`. `donchian_breakout_v2` improved on every test
+  set but is not statistically proven; the rest are mixed or still lose.
+- New risk rule `max_cost_pct_of_risk` (default 25): skip trades whose
+  round-trip Groww charges exceed that share of the rupees at risk.
+- `scripts/compare_versions.py` for side-by-side tests over explicit windows
+  and random stock draws; validation results (JSON) in `docs/validation-results/`.
 - `docs/14-historical-validation.md`: every strategy tested on 2010-2026 NSE
   data (watchlist and NIFTY 50), with a 70/30 time split, Groww charges,
   slippage and all risk rules. Result: no strategy has a demonstrated edge out

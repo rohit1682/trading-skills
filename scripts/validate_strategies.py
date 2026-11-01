@@ -164,9 +164,10 @@ def lookahead_probe(df: pd.DataFrame, strat, cuts: int = 12, seed: int = 1) -> d
 
 # ----------------------------------------------------------------------------- one strategy
 
-def run_strategy(name: str, data: dict, regime, capital: float, split: float, start, mc_sims: int) -> dict:
+def run_strategy(name: str, data: dict, regime, capital: float, split: float, start, mc_sims: int,
+                 risk_over: dict | None = None) -> dict:
     strat = strategies.get(name)
-    risk = dict(DEFAULTS)
+    risk = {**DEFAULTS, **(risk_over or {})}
     kw = dict(strategy=strat, risk_cfg=risk, initial_capital=capital, slippage_pct=0.05, regime=regime)
     timeline = pd.DatetimeIndex(sorted(set().union(*[df.index for df in data.values()])))
     timeline = timeline[timeline >= start]
@@ -215,6 +216,8 @@ def main(argv=None) -> int:
     ap.add_argument("--start", default="2010-01-01", help="first tradable date (earlier bars only warm up indicators)")
     ap.add_argument("--no-regime", action="store_true")
     ap.add_argument("--mc-sims", type=int, default=5000)
+    ap.add_argument("--no-cost-gate", action="store_true",
+                    help="turn off max_cost_pct_of_risk (doc 14's numbers were produced before it existed)")
     ap.add_argument("--json", help="write results here")
     a = ap.parse_args(argv)
 
@@ -241,7 +244,8 @@ def main(argv=None) -> int:
             continue
         start = pd.Timestamp(a.start) if not strat.intraday else min(df.index[0] for df in data.values())
         print(f"[run] {name} on {len(data)} symbols, {interval}", file=sys.stderr, flush=True)
-        r = run_strategy(name, data, regime, a.capital, a.split, start, a.mc_sims)
+        r = run_strategy(name, data, regime, a.capital, a.split, start, a.mc_sims,
+                         {"max_cost_pct_of_risk": 0} if a.no_cost_gate else None)
         r.update(universe=a.universe, capital=a.capital, regime_filter=regime is not None)
         results.append(r)
         o = r["OOS"]

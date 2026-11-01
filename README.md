@@ -55,6 +55,17 @@ Example prompts for each: [docs/04-skills-guide.md](docs/04-skills-guide.md).
 | `donchian_breakout` | daily, CNC | 20-day high breakout on volume, exit at the 10-day low |
 | `vwap_pullback` | 5-min, MIS | Intraday pullback to VWAP/EMA 21 in an uptrend |
 | `orb` | 5-min, MIS | 15-minute opening-range breakout above VWAP on volume |
+| `ema_trend_v2` | daily, CNC | EMA 20/50 cross above the 200 EMA, Chandelier trailing exit |
+| `macd_momentum_v2` | daily, CNC | MACD crosses up below zero in an uptrend, Chandelier trailing exit |
+| `donchian_breakout_v2` | daily, CNC | Turtle 55-day breakout, exit at the 20-day low |
+| `rsi2_reversion_v2` | daily, CNC | RSI(2) < 5 after a 1.5 ATR pullback |
+| `vwap_pullback_v2` | 5-min, MIS | VWAP pullback, wider stop, no VWAP exit |
+| `orb_v2` | 5-min, MIS | 30-minute opening range, stop at the range low |
+
+**Tested on 2010-2026 NSE data, no strategy has a proven edge yet**, and
+buying and holding beat all of them. See
+[historical validation](docs/14-historical-validation.md) and
+[strategy v2](docs/15-strategy-v2.md) before trading any of them.
 
 Rules, strengths and failure modes: [docs/06-strategies.md](docs/06-strategies.md).
 All are long-only and use completed candles only (a test proves no strategy

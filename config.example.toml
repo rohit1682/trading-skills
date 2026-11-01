@@ -41,6 +41,7 @@ no_entries_before = "09:30"
 no_entries_after = "14:30"
 squareoff_time = "15:10"        # bot flattens MIS positions here (Groww's own auto square-off is later and charges a fee)
 regime_filter = true            # only take longs while NIFTY 50 closes above its 50-day EMA
+max_cost_pct_of_risk = 25.0     # skip trades whose round-trip charges exceed this % of the rupees at risk (0 = off)
 # NSE trading holidays (YYYY-MM-DD) so the engine stays idle. Copy them from NSE's holiday list each year.
 holidays = []
 

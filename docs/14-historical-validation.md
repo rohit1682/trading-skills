@@ -7,6 +7,11 @@ rule from `config.example.toml`. Nothing was tuned. The script is
 came from [`scripts/fetch_data.py`](../scripts/fetch_data.py) (Yahoo Finance,
 downloaded 1 Nov 2026).
 
+> Follow-up: [doc 15](15-strategy-v2.md) rewrote the losing strategies and
+> tested them on 30 random other stocks. The numbers below were produced
+> before the `max_cost_pct_of_risk` risk rule existed; pass `--no-cost-gate`
+> to `validate_strategies.py` to reproduce them.
+
 ## Verdict
 
 **None of the seven strategies has a demonstrated edge.** Out of sample, after
@@ -252,7 +257,7 @@ safe.
 
 ```bash
 python scripts/fetch_data.py                       # needs Yahoo access; writes data/validation/
-python scripts/validate_strategies.py --data-dir data/validation --universe watchlist --strategies ema_trend,supertrend_adx,rsi2_reversion,macd_momentum,donchian_breakout --json out.json
+python scripts/validate_strategies.py --no-cost-gate --data-dir data/validation --universe watchlist --strategies ema_trend,supertrend_adx,rsi2_reversion,macd_momentum,donchian_breakout --json out.json
 python scripts/validate_strategies.py --data-dir data/validation --universe nifty50 --capital 500000 --strategies supertrend_adx
 python scripts/validate_strategies.py --data-dir data/validation --strategies vwap_pullback,orb --no-regime
 python scripts/validate_strategies.py --data-dir data/validation --strategies vwap_pullback,orb --interval 1hour

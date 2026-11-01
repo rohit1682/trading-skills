@@ -1,0 +1,330 @@
+[
+ {
+  "strategy": "vwap_pullback",
+  "interval": "5minute",
+  "symbols": 15,
+  "start": "2026-08-06",
+  "cut": "2026-10-06",
+  "end": "2026-10-30",
+  "full": {
+   "trades": 53,
+   "win_rate_pct": 9.4,
+   "breakeven_win_rate_pct": 67.9,
+   "avg_win_r": 0.72,
+   "avg_loss_r": -1.52,
+   "expectancy_per_trade": -38.65,
+   "profit_factor": 0.06,
+   "total_costs": 1280.82,
+   "net_pnl": -2048.21,
+   "signals_blocked_by_risk": 4782,
+   "total_return_pct": -3.77,
+   "cagr_pct": null,
+   "max_drawdown_pct": -3.77,
+   "sharpe": -7.52,
+   "exp_r": -1.306,
+   "sd_r": 0.84,
+   "t_stat": -11.36,
+   "ci95_r": [
+    -1.521,
+    -1.075
+   ],
+   "trades_needed_t2": null,
+   "time_in_market_pct": 23.7,
+   "gross_return_pct": -0.64,
+   "gross_trades": 52,
+   "buy_hold": {
+    "total_return_pct": -4.86,
+    "cagr_pct": null,
+    "max_drawdown_pct": -9.27,
+    "sharpe": -1.85
+   },
+   "blocked_by": {
+    "market": 2119,
+    "reward:risk": 1825,
+    "trading": 744,
+    "4": 82,
+    "already": 9,
+    "position": 3
+   },
+   "exit_reasons": {
+    "exit signal": 40,
+    "stop": 8,
+    "target": 4,
+    "square-off": 1
+   }
+  },
+  "montecarlo_full": {
+   "trades_in_sample": 53,
+   "trades_per_path": 53,
+   "simulations": 5000,
+   "risk_per_trade_pct": 0.5,
+   "avg_r": -1.306,
+   "win_rate_pct": 9.4,
+   "return_pct": {
+    "p5": -32.82,
+    "median": -29.47,
+    "p95": -25.67
+   },
+   "max_drawdown_pct": {
+    "median": -29.53,
+    "p95_worst": -32.83,
+    "p99_worst": -34.09
+   },
+   "prob_losing_money_pct": 100.0,
+   "prob_drawdown_over_30pct": 41.0,
+   "losing_streak": {
+    "median": 20,
+    "p95": 38
+   }
+  },
+  "IS": {
+   "trades": 53,
+   "win_rate_pct": 9.4,
+   "breakeven_win_rate_pct": 67.9,
+   "avg_win_r": 0.72,
+   "avg_loss_r": -1.52,
+   "expectancy_per_trade": -38.65,
+   "profit_factor": 0.06,
+   "total_costs": 1280.82,
+   "net_pnl": -2048.21,
+   "signals_blocked_by_risk": 3256,
+   "total_return_pct": -3.77,
+   "cagr_pct": null,
+   "max_drawdown_pct": -3.77,
+   "sharpe": -9.36,
+   "exp_r": -1.306,
+   "sd_r": 0.84,
+   "t_stat": -11.36,
+   "ci95_r": [
+    -1.521,
+    -1.075
+   ],
+   "trades_needed_t2": null,
+   "time_in_market_pct": 33.3,
+   "gross_return_pct": -0.64,
+   "gross_trades": 52,
+   "buy_hold": {
+    "total_return_pct": -7.8,
+    "cagr_pct": null,
+    "max_drawdown_pct": -9.04,
+    "sharpe": -5.87
+   },
+   "blocked_by": {
+    "reward:risk": 1293,
+    "market": 1125,
+    "trading": 744,
+    "4": 82,
+    "already": 9,
+    "position": 3
+   },
+   "exit_reasons": {
+    "exit signal": 40,
+    "stop": 8,
+    "target": 4,
+    "square-off": 1
+   }
+  },
+  "OOS": {
+   "trades": 0,
+   "win_rate_pct": 0.0,
+   "breakeven_win_rate_pct": null,
+   "avg_win_r": 0.0,
+   "avg_loss_r": -0.0,
+   "expectancy_per_trade": 0.0,
+   "profit_factor": null,
+   "total_costs": 0,
+   "net_pnl": 0.0,
+   "signals_blocked_by_risk": 1525,
+   "total_return_pct": 0.0,
+   "cagr_pct": null,
+   "max_drawdown_pct": 0.0,
+   "sharpe": null,
+   "exp_r": null,
+   "t_stat": null,
+   "ci95_r": null,
+   "trades_needed_t2": null,
+   "time_in_market_pct": 0.0,
+   "gross_return_pct": 0.0,
+   "gross_trades": 0,
+   "buy_hold": {
+    "total_return_pct": 2.78,
+    "cagr_pct": null,
+    "max_drawdown_pct": -2.07,
+    "sharpe": 2.67
+   },
+   "blocked_by": {
+    "market": 993,
+    "reward:risk": 532
+   },
+   "exit_reasons": {}
+  },
+  "lookahead_probe": {
+   "cuts_checked": 12,
+   "mismatched_values": 0
+  },
+  "universe": "watchlist",
+  "capital": 50000.0,
+  "regime_filter": true
+ },
+ {
+  "strategy": "orb",
+  "interval": "5minute",
+  "symbols": 15,
+  "start": "2026-08-06",
+  "cut": "2026-10-06",
+  "end": "2026-10-30",
+  "full": {
+   "trades": 20,
+   "win_rate_pct": 10.0,
+   "breakeven_win_rate_pct": 46.7,
+   "avg_win_r": 1.09,
+   "avg_loss_r": -0.95,
+   "expectancy_per_trade": -39.35,
+   "profit_factor": 0.21,
+   "total_costs": 498.61,
+   "net_pnl": -786.95,
+   "signals_blocked_by_risk": 156,
+   "total_return_pct": -1.71,
+   "cagr_pct": null,
+   "max_drawdown_pct": -1.71,
+   "sharpe": -5.9,
+   "exp_r": -0.75,
+   "sd_r": 0.82,
+   "t_stat": -4.07,
+   "ci95_r": [
+    -1.094,
+    -0.384
+   ],
+   "trades_needed_t2": null,
+   "time_in_market_pct": 20.3,
+   "gross_return_pct": -0.25,
+   "gross_trades": 24,
+   "buy_hold": {
+    "total_return_pct": -4.86,
+    "cagr_pct": null,
+    "max_drawdown_pct": -9.27,
+    "sharpe": -1.85
+   },
+   "blocked_by": {
+    "market": 137,
+    "reward:risk": 17,
+    "position": 2
+   },
+   "exit_reasons": {
+    "exit signal": 17,
+    "square-off": 1,
+    "stop": 1,
+    "target": 1
+   }
+  },
+  "montecarlo_full": {
+   "trades_in_sample": 20,
+   "trades_per_path": 20,
+   "simulations": 5000,
+   "risk_per_trade_pct": 0.5,
+   "avg_r": -0.75,
+   "win_rate_pct": 10.0,
+   "return_pct": {
+    "p5": -9.84,
+    "median": -7.31,
+    "p95": -4.35
+   },
+   "max_drawdown_pct": {
+    "median": -7.47,
+    "p95_worst": -9.89,
+    "p99_worst": -10.84
+   },
+   "prob_losing_money_pct": 100.0,
+   "prob_drawdown_over_30pct": 0.0,
+   "losing_streak": {
+    "median": 12,
+    "p95": 20
+   }
+  },
+  "IS": {
+   "trades": 20,
+   "win_rate_pct": 10.0,
+   "breakeven_win_rate_pct": 46.7,
+   "avg_win_r": 1.09,
+   "avg_loss_r": -0.95,
+   "expectancy_per_trade": -39.35,
+   "profit_factor": 0.21,
+   "total_costs": 498.61,
+   "net_pnl": -786.95,
+   "signals_blocked_by_risk": 79,
+   "total_return_pct": -1.71,
+   "cagr_pct": null,
+   "max_drawdown_pct": -1.71,
+   "sharpe": -7.2,
+   "exp_r": -0.75,
+   "sd_r": 0.82,
+   "t_stat": -4.07,
+   "ci95_r": [
+    -1.094,
+    -0.384
+   ],
+   "trades_needed_t2": null,
+   "time_in_market_pct": 28.6,
+   "gross_return_pct": -0.25,
+   "gross_trades": 24,
+   "buy_hold": {
+    "total_return_pct": -7.8,
+    "cagr_pct": null,
+    "max_drawdown_pct": -9.04,
+    "sharpe": -5.87
+   },
+   "blocked_by": {
+    "market": 64,
+    "reward:risk": 13,
+    "position": 2
+   },
+   "exit_reasons": {
+    "exit signal": 17,
+    "square-off": 1,
+    "stop": 1,
+    "target": 1
+   }
+  },
+  "OOS": {
+   "trades": 0,
+   "win_rate_pct": 0.0,
+   "breakeven_win_rate_pct": null,
+   "avg_win_r": 0.0,
+   "avg_loss_r": -0.0,
+   "expectancy_per_trade": 0.0,
+   "profit_factor": null,
+   "total_costs": 0,
+   "net_pnl": 0.0,
+   "signals_blocked_by_risk": 77,
+   "total_return_pct": 0.0,
+   "cagr_pct": null,
+   "max_drawdown_pct": 0.0,
+   "sharpe": null,
+   "exp_r": null,
+   "t_stat": null,
+   "ci95_r": null,
+   "trades_needed_t2": null,
+   "time_in_market_pct": 0.0,
+   "gross_return_pct": 0.0,
+   "gross_trades": 0,
+   "buy_hold": {
+    "total_return_pct": 2.78,
+    "cagr_pct": null,
+    "max_drawdown_pct": -2.07,
+    "sharpe": 2.67
+   },
+   "blocked_by": {
+    "market": 73,
+    "reward:risk": 4
+   },
+   "exit_reasons": {}
+  },
+  "lookahead_probe": {
+   "cuts_checked": 12,
+   "mismatched_values": 0
+  },
+  "universe": "watchlist",
+  "capital": 50000.0,
+  "regime_filter": true
+ }
+]

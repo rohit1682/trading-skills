@@ -196,6 +196,120 @@ def opening_range_breakout(df, range_minutes=15, last_entry="11:00", rvol_min=1.
     })
 
 
+# --------------------------------------------------------------------------- v2 (Nov 2026)
+# Rewrites of the strategies that lost money in docs/14-historical-validation.md.
+# Each change was decided from *why* the original lost (costs, cut winners,
+# churn), then judged on stocks and years the change was not designed on.
+# Results: docs/15-strategy-v2.md. The originals stay for comparison.
+
+def _chandelier_exit(df, period=22, mult=3.0):
+    """Close below the highest high of the last ``period`` bars minus ``mult`` ATRs."""
+    a = ind.atr(df, period)
+    return df["close"] < df["high"].rolling(period, min_periods=period).max() - mult * a
+
+
+def ema_trend_v2(df, fast=20, slow=50, trend=200, adx_min=20.0, stop_atr=3.0, trail=22, trail_atr=3.0):
+    """Slower EMA 20/50 cross above the 200 EMA; no profit target, Chandelier trailing exit.
+
+    v1 lost because the 9/21 cross-back exit and a fixed 4 ATR target cut the few
+    big winners a trend strategy lives on, and its many short trades paid charges each time.
+    """
+    c = df["close"]
+    f, s, t = ind.ema(c, fast), ind.ema(c, slow), ind.ema(c, trend)
+    a = ind.atr(df, 14)
+    entry = _cross_above(f, s) & (c > t) & (ind.adx(df)["adx"] >= adx_min)
+    return pd.DataFrame({
+        "entry": entry,
+        "exit": _chandelier_exit(df, trail, trail_atr) | (c < t),
+        "stop": c - stop_atr * a,
+        "target": np.nan,
+    })
+
+
+def macd_momentum_v2(df, trend_fast=50, trend_slow=200, stop_atr=3.0, trail=22, trail_atr=3.0):
+    """MACD crosses up from *below zero* (a pullback ending) in a 50>200 EMA uptrend;
+    no target, Chandelier trailing exit instead of the MACD cross-back."""
+    c = df["close"]
+    m = ind.macd(c)
+    e50, e200 = ind.ema(c, trend_fast), ind.ema(c, trend_slow)
+    a = ind.atr(df, 14)
+    entry = _cross_above(m["macd"], m["signal"]) & (m["macd"] < 0) & (c > e50) & (e50 > e200)
+    return pd.DataFrame({
+        "entry": entry,
+        "exit": _chandelier_exit(df, trail, trail_atr) | (c < e200),
+        "stop": c - stop_atr * a,
+        "target": np.nan,
+    })
+
+
+def donchian_breakout_v2(df, period=55, exit_period=20, trend=200, stop_atr=3.0):
+    """Classic Turtle System 2: 55-day breakout above the 200 EMA, exit at the 20-day low.
+
+    v1's 20/10 channels traded about twice as often for the same trend, paying charges each time.
+    """
+    c = df["close"]
+    d = ind.donchian(df, period)
+    d_exit = ind.donchian(df, exit_period)
+    a = ind.atr(df, 20)
+    entry = (c > d["upper"]) & (c > ind.ema(c, trend))
+    return pd.DataFrame({
+        "entry": entry,
+        "exit": c < d_exit["lower"],
+        "stop": c - stop_atr * a,
+        "target": np.nan,
+    })
+
+
+def rsi2_reversion_v2(df, rsi_entry=5.0, trend=200, exit_sma=5, stop_atr=3.0, min_drop_atr=1.5):
+    """RSI(2) < 5 dip-buy above the 200 SMA, only after a real pullback (close at least
+    1.5 ATR under its 5-day high), so the expected bounce is big enough to pay delivery charges.
+    Exit above the 5 SMA, max 5 bars."""
+    c = df["close"]
+    a = ind.atr(df, 14)
+    pullback = df["high"].rolling(5).max() - c >= min_drop_atr * a
+    entry = (c > ind.sma(c, trend)) & (ind.rsi(c, 2) < rsi_entry) & pullback
+    return pd.DataFrame({
+        "entry": entry,
+        "exit": c > ind.sma(c, exit_sma),
+        "stop": c - stop_atr * a,
+        "target": np.nan,
+    })
+
+
+def vwap_pullback_v2(df, rsi_lo=45.0, rsi_hi=65.0, lookback=3, rr=2.0, last_entry="13:30", min_stop_atr=1.0):
+    """v1 entry, but no exit on the first close below VWAP (it fired within a few bars
+    on most trades), a stop at least 1 ATR wide so charges are a small share of the risk,
+    one entry per day per stock. Exits: stop, 2R target or the 15:10 square-off."""
+    c, lo = df["close"], df["low"]
+    v = ind.vwap(df)
+    e9, e21 = ind.ema(c, 9), ind.ema(c, 21)
+    a = ind.atr(df, 14)
+    touched = (lo.shift(1) <= e21.shift(1) * 1.001) | (lo.shift(1) <= v.shift(1) * 1.001)
+    t = _bar_time(df)
+    day = pd.Series(df.index.date, index=df.index)
+    in_window = (t >= time(9, 45)) & (t <= time.fromisoformat(last_entry))
+    raw = (c > v) & (e9 > e21) & touched & (c > df["open"]) & (c > e9) & ind.rsi(c, 14).between(rsi_lo, rsi_hi) & in_window
+    entry = raw & (raw.astype(int).groupby(day).cumsum() == 1)
+    stop = pd.concat([lo.rolling(lookback).min(), v, c - min_stop_atr * a], axis=1).min(axis=1) - 0.1 * a
+    return pd.DataFrame({"entry": entry, "exit": False, "stop": stop, "target": c + rr * (c - stop)})
+
+
+def opening_range_breakout_v2(df, range_minutes=30, last_entry="11:30", rvol_min=1.5, rr=2.0):
+    """30-minute opening range; stop at the range low, 2R target, no VWAP exit, one entry a day."""
+    t = _bar_time(df)
+    day = pd.Series(df.index.date, index=df.index)
+    end_minute = 15 + range_minutes
+    range_end = time(9 + end_minute // 60, end_minute % 60)
+    in_range = (t >= time(9, 15)) & (t < range_end)
+    or_high = df["high"].where(in_range).groupby(day).transform("max")
+    or_low = df["low"].where(in_range).groupby(day).transform("min")
+    c = df["close"]
+    after = (t >= range_end) & (t <= time.fromisoformat(last_entry))
+    breakout = after & (c > or_high) & (c > ind.vwap(df)) & (ind.relative_volume(df["volume"]) >= rvol_min)
+    first = breakout & (breakout.astype(int).groupby(day).cumsum() == 1)
+    return pd.DataFrame({"entry": first, "exit": False, "stop": or_low, "target": c + rr * (c - or_low)})
+
+
 STRATEGIES: dict[str, Strategy] = {
     s.name: s
     for s in [
@@ -206,6 +320,12 @@ STRATEGIES: dict[str, Strategy] = {
         Strategy("donchian_breakout", "20-day high breakout on volume, exit at the 10-day low", "1day", False, donchian_breakout),
         Strategy("vwap_pullback", "Intraday pullback to VWAP/EMA21 in an uptrend (5-minute)", "5minute", True, vwap_pullback),
         Strategy("orb", "15-minute opening-range breakout above VWAP on volume (5-minute)", "5minute", True, opening_range_breakout),
+        Strategy("ema_trend_v2", "EMA 20/50 cross above the 200 EMA, ADX >= 20, Chandelier trailing exit", "1day", False, ema_trend_v2),
+        Strategy("macd_momentum_v2", "MACD crosses up below zero in a 50>200 EMA uptrend, Chandelier trailing exit", "1day", False, macd_momentum_v2),
+        Strategy("donchian_breakout_v2", "Turtle 55-day breakout above the 200 EMA, exit at the 20-day low", "1day", False, donchian_breakout_v2),
+        Strategy("rsi2_reversion_v2", "RSI(2) < 5 after a 1.5 ATR pullback above the 200 SMA, exit above the 5 SMA", "1day", False, rsi2_reversion_v2, max_hold_bars=5),
+        Strategy("vwap_pullback_v2", "VWAP/EMA21 pullback, wider stop, no VWAP exit, one entry a day (5-minute)", "5minute", True, vwap_pullback_v2),
+        Strategy("orb_v2", "30-minute opening-range breakout, stop at the range low, 2R target (5-minute)", "5minute", True, opening_range_breakout_v2),
     ]
 }
 

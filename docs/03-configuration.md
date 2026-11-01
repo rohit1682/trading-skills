@@ -15,7 +15,7 @@ the repo folder when you run them from elsewhere.
 | `mode` | `"paper"` | `"live"` is one of the three live gates |
 | `capital` | 50000 | rupees the bot may use; live uses min(this, Groww cash) |
 | `watchlist` | 15 large caps | symbols the engine scans and trades |
-| `[strategy] name` | `supertrend_adx` | one of the 7 strategies ([list](06-strategies.md)) |
+| `[strategy] name` | `supertrend_adx` | one of the 13 strategies ([list](06-strategies.md)) |
 | `[strategy] params` | `{}` | overrides, e.g. `{ adx_min = 25, rr = 2.5 }` |
 | `[risk] risk_per_trade_pct` | 0.5 | % of capital lost at the stop |
 | `[risk] max_position_pct` | 20 | max % of capital in one stock |
@@ -30,6 +30,7 @@ the repo folder when you run them from elsewhere.
 | `[risk] no_entries_before / after` | 09:30 / 14:30 | intraday entry window |
 | `[risk] squareoff_time` | 15:10 | intraday exit time |
 | `[risk] regime_filter` | true | no new longs while NIFTY < its 50-day EMA |
+| `[risk] max_cost_pct_of_risk` | 25 | skip a trade whose round-trip charges exceed this % of the rupees it risks; 0 = off ([why](15-strategy-v2.md)) |
 | `[risk] holidays` | `[]` | NSE holidays, `"YYYY-MM-DD"` |
 | `[execution] entry_order_type` | MARKET | or LIMIT (signal price + `limit_buffer_pct`) |
 | `[execution] place_broker_stop` | true | SL-M at Groww after every live fill |

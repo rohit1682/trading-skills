@@ -54,6 +54,25 @@ Intraday costs matter more: a Rs 20 + Rs 20 brokerage on a Rs 10,000 trade is
 0.4 % before taxes. Check `python -m growwbot costs` against your typical
 target size.
 
+## v2 versions (November 2026)
+
+Rewrites of the strategies that lost money in the
+[historical validation](14-historical-validation.md). The originals are
+unchanged. Test results: [Strategy v2](15-strategy-v2.md). **None is proven
+profitable**; `donchian_breakout_v2` is the most promising.
+
+| strategy | entry | stop / target | exit |
+| --- | --- | --- | --- |
+| `ema_trend_v2` | EMA 20 crosses above EMA 50, close > EMA 200, ADX ≥ 20 | 3 ATR / none | Chandelier (22-day high − 3 ATR) or close < EMA 200 |
+| `macd_momentum_v2` | MACD crosses its signal **below zero**, close > EMA 50 > EMA 200 | 3 ATR / none | Chandelier or close < EMA 200 |
+| `donchian_breakout_v2` | close above the prior 55-day high, above EMA 200 | 3 ATR(20) / none | close below the prior 20-day low |
+| `rsi2_reversion_v2` | RSI(2) < 5, close > SMA 200, close ≥ 1.5 ATR below its 5-day high | 3 ATR / none | close > SMA 5, or 5 days |
+| `vwap_pullback_v2` | as `vwap_pullback`, 09:45-13:30, once per stock per day | ≥ 1 ATR wide / 2R | stop, target or 15:10 (no VWAP exit) |
+| `orb_v2` | first close above the 09:15-09:45 range before 11:30, above VWAP, RVOL ≥ 1.5 | range low / 2R | stop, target or 15:10 |
+
+All strategies also pass the `max_cost_pct_of_risk` check: a trade whose
+Groww charges would exceed 25 % of the rupees it risks is skipped.
+
 ## Market regime filter
 
 With `regime_filter = true`, no new longs while NIFTY 50's previous close is

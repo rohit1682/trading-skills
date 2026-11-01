@@ -32,6 +32,10 @@ DEFAULTS = {
     "no_entries_after": "14:30",
     "squareoff_time": "15:10",
     "regime_filter": True,
+    # Skip a trade when Groww's round-trip charges would eat more than this % of
+    # the rupees it risks. 0 turns the check off. See docs/14-historical-validation.md:
+    # on a Rs 50k account most delivery trades failed it, and those trades lost money.
+    "max_cost_pct_of_risk": 25.0,
 }
 
 
@@ -83,8 +87,10 @@ def release_kill_switch() -> bool:
 # ----------------------------------------------------------------------------- manager
 
 class RiskManager:
-    def __init__(self, risk_cfg: dict | None = None, capital: float = 50000.0, persist: bool = False):
+    def __init__(self, risk_cfg: dict | None = None, capital: float = 50000.0, persist: bool = False,
+                 costs=None):
         self.cfg = {**DEFAULTS, **(risk_cfg or {})}
+        self.costs = costs  # CostModel; None -> the cost check uses Groww's default charges
         self.capital = float(capital)
         self.persist = persist
         self.day = self._load() if persist else DayState()
@@ -178,6 +184,14 @@ class RiskManager:
         qty = self.size(entry, stop, cash)
         if qty < 1:
             reasons.append("position size rounds to 0 shares (stop too wide or capital too small)")
+        elif entry > stop and float(c.get("max_cost_pct_of_risk") or 0) > 0:
+            from .costs import CostModel
+
+            cost = (self.costs or CostModel()).round_trip(entry, entry, qty, intraday)
+            risk_rs = qty * (entry - stop)
+            if cost > risk_rs * float(c["max_cost_pct_of_risk"]) / 100.0:
+                reasons.append(f"charges Rs {cost:,.0f} are {100 * cost / risk_rs:.0f}% of the Rs {risk_rs:,.0f} at risk "
+                               f"(max {c['max_cost_pct_of_risk']}%): position too small for the fees")
         # Worst case today if this and every open trade hit their stops.
         new_risk = qty * max(0.0, entry - stop)
         worst = -self.day.realised_pnl + open_risk + new_risk
