@@ -4,7 +4,7 @@
         --strategies ema_trend,ema_trend_v2 --universe watchlist \
         --window 2010-01-01:2021-01-01 --capital 50000 --json dev.json
 
-``--universe random:N:SEED`` draws N stocks (fixed seed) from every daily CSV in
+``--universe random:N:SEED[:EXCLUDE_SEED]`` draws N stocks (fixed seed) from every daily CSV in
 the data dir that is not in the watchlist and has bars before 2011, so the
 draw includes names that later dropped out of the NIFTY.
 """
@@ -32,11 +32,14 @@ INDEXES = {"NIFTY", "BANKNIFTY", "NIFTYBEES"}
 
 def pick_universe(spec: str, ddir: Path, repo: Path) -> list[str]:
     if spec.startswith("random:"):
-        _, n, seed = spec.split(":")
+        # random:N:SEED, or random:N:SEED:EXCLUDE_SEED to draw a fresh set disjoint from an earlier draw
+        parts = spec.split(":")
+        n, seed = parts[1], parts[2]
+        exclude = set(pick_universe(f"random:{n}:{parts[3]}", ddir, repo)) if len(parts) > 3 else set()
         pool = []
         for f in sorted(ddir.glob("*_1day.csv")):
             sym = f.name[: -len("_1day.csv")]
-            if sym in INDEXES or sym in vs.WATCHLIST:
+            if sym in INDEXES or sym in vs.WATCHLIST or sym in exclude:
                 continue
             first = pd.read_csv(f, nrows=1).iloc[0, 0]
             if str(first) < "2011-01-01":

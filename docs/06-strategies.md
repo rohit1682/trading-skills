@@ -59,7 +59,7 @@ target size.
 Rewrites of the strategies that lost money in the
 [historical validation](14-historical-validation.md). The originals are
 unchanged. Test results: [Strategy v2](15-strategy-v2.md). **None is proven
-profitable**; `donchian_breakout_v2` is the most promising.
+profitable**; see [doc 16](16-holdout-and-status.md) and `python -m growwbot strategies` for each one's test status.
 
 | strategy | entry | stop / target | exit |
 | --- | --- | --- | --- |

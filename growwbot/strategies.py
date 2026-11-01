@@ -330,6 +330,31 @@ STRATEGIES: dict[str, Strategy] = {
 }
 
 
+# Result of the historical tests in docs/14-16 (2010-2026 NSE data, Groww costs,
+# out-of-sample only). "failed": lost money out of sample; "unproven": mixed or
+# positive but not statistically distinguishable from luck. No strategy is
+# "validated" yet. `run --live` refuses a "failed" strategy.
+STATUS: dict[str, tuple[str, str]] = {
+    "ema_trend": ("failed", "positive on 2 of 7 out-of-sample sets at Rs 50k (docs 14-16)"),
+    "supertrend_adx": ("unproven", "positive on 4 of 7 sets; t 2.1 on one, negative on NIFTY 50 and draw A (doc 16)"),
+    "rsi2_reversion": ("failed", "lost on 7 of 7 sets, t -5 to -8 (docs 14-16)"),
+    "macd_momentum": ("failed", "lost on 7 of 7 sets (docs 14-16)"),
+    "donchian_breakout": ("failed", "positive on 2 of 7 sets, near zero at best (docs 14-16)"),
+    "vwap_pullback": ("failed", "loses even before charges on 5/15/60-minute bars (doc 14)"),
+    "orb": ("failed", "loses on 5/15/60-minute bars (doc 14)"),
+    "ema_trend_v2": ("unproven", "positive on 3 of 5 sets, t -2.2 on the fresh holdout 2010-20 (doc 16)"),
+    "macd_momentum_v2": ("unproven", "positive on 2 of 5 sets, about break-even overall (doc 16)"),
+    "donchian_breakout_v2": ("unproven", "positive on 3 of 5 sets; lost on the fresh holdout, t -1.9 in 2021-26 (doc 16)"),
+    "rsi2_reversion_v2": ("failed", "lost on 5 of 5 sets (docs 15-16)"),
+    "vwap_pullback_v2": ("failed", "still loses (doc 15)"),
+    "orb_v2": ("failed", "still loses (doc 15)"),
+}
+
+
+def status(name: str) -> tuple[str, str]:
+    return STATUS.get(name, ("untested", "not yet run through scripts/validate_strategies.py"))
+
+
 def get(name: str) -> Strategy:
     try:
         return STRATEGIES[name]

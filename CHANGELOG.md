@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Fresh 30-stock holdout (doc 16): `donchian_breakout_v2`'s earlier promise
+  did not replicate; no strategy is positive on every out-of-sample set.
+  A v3 momentum-filter variant was tried on the design data, didn't help,
+  and was dropped.
+- New `strategies` command with each strategy's test status and evidence;
+  `scan` and `backtest` show it; `run --live` refuses a `failed` strategy.
 - Six v2 strategies (`ema_trend_v2`, `macd_momentum_v2`, `donchian_breakout_v2`,
   `rsi2_reversion_v2`, `vwap_pullback_v2`, `orb_v2`) rewritten from why v1
   lost, then tested on 30 random other stocks (2010-2020) and on 2021-2026:

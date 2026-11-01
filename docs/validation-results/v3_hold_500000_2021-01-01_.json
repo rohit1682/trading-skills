@@ -1,0 +1,827 @@
+[
+ {
+  "trades": 77,
+  "win_rate_pct": 26.0,
+  "breakeven_win_rate_pct": 33.7,
+  "avg_win_r": 1.42,
+  "avg_loss_r": -0.72,
+  "profit_factor": 0.68,
+  "total_costs": 13499.13,
+  "net_pnl": -31837.07,
+  "total_return_pct": -6.37,
+  "cagr_pct": -1.12,
+  "max_drawdown_pct": -9.43,
+  "sharpe": -0.45,
+  "exp_r": -0.166,
+  "sd_r": 1.05,
+  "t_stat": -1.39,
+  "ci95_r": [
+   -0.391,
+   0.073
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": -3.88,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 58,
+   "market": 27,
+   "already": 17,
+   "reward:risk": 9
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -13.18,
+    "median": -6.36,
+    "p95": 1.3
+   },
+   "max_drawdown_pct": {
+    "median": -8.34,
+    "p95_worst": -14.0,
+    "p99_worst": -16.08
+   },
+   "prob_losing_money_pct": 91.8,
+   "losing_streak": {
+    "median": 11,
+    "p95": 19
+   }
+  },
+  "strategy": "ema_trend",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 45,
+  "win_rate_pct": 46.7,
+  "breakeven_win_rate_pct": 33.7,
+  "avg_win_r": 1.21,
+  "avg_loss_r": -0.61,
+  "profit_factor": 1.67,
+  "total_costs": 6795.91,
+  "net_pnl": 25413.08,
+  "total_return_pct": 5.08,
+  "cagr_pct": 0.85,
+  "max_drawdown_pct": -4.01,
+  "sharpe": 0.46,
+  "exp_r": 0.236,
+  "sd_r": 1.35,
+  "t_stat": 1.18,
+  "ci95_r": [
+   -0.127,
+   0.655
+  ],
+  "trades_needed_t2": 130,
+  "gross_return_pct": 6.02,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 45,
+   "market": 16,
+   "already": 13
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -1.98,
+    "median": 4.94,
+    "p95": 13.35
+   },
+   "max_drawdown_pct": {
+    "median": -2.35,
+    "p95_worst": -4.87,
+    "p99_worst": -5.91
+   },
+   "prob_losing_money_pct": 12.2,
+   "losing_streak": {
+    "median": 5,
+    "p95": 9
+   }
+  },
+  "strategy": "ema_trend_v2",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 247,
+  "win_rate_pct": 34.8,
+  "breakeven_win_rate_pct": 34.0,
+  "avg_win_r": 1.12,
+  "avg_loss_r": -0.58,
+  "profit_factor": 1.03,
+  "total_costs": 47911.54,
+  "net_pnl": 6420.15,
+  "total_return_pct": 1.28,
+  "cagr_pct": 0.22,
+  "max_drawdown_pct": -9.11,
+  "sharpe": 0.08,
+  "exp_r": 0.014,
+  "sd_r": 1.0,
+  "t_stat": 0.22,
+  "ci95_r": [
+   -0.106,
+   0.141
+  ],
+  "trades_needed_t2": 20657,
+  "gross_return_pct": 16.1,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 218,
+   "already": 155,
+   "market": 83,
+   "reward:risk": 70,
+   "would": 2,
+   "trading": 2,
+   "charges": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -10.6,
+    "median": 1.34,
+    "p95": 15.86
+   },
+   "max_drawdown_pct": {
+    "median": -7.58,
+    "p95_worst": -14.25,
+    "p99_worst": -18.57
+   },
+   "prob_losing_money_pct": 43.6,
+   "losing_streak": {
+    "median": 11,
+    "p95": 17
+   }
+  },
+  "strategy": "macd_momentum",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 66,
+  "win_rate_pct": 27.3,
+  "breakeven_win_rate_pct": 26.4,
+  "avg_win_r": 1.44,
+  "avg_loss_r": -0.52,
+  "profit_factor": 1.01,
+  "total_costs": 9652.56,
+  "net_pnl": 685.08,
+  "total_return_pct": 0.14,
+  "cagr_pct": 0.02,
+  "max_drawdown_pct": -8.74,
+  "sharpe": 0.02,
+  "exp_r": 0.017,
+  "sd_r": 1.63,
+  "t_stat": 0.09,
+  "ci95_r": [
+   -0.295,
+   0.467
+  ],
+  "trades_needed_t2": 34919,
+  "gross_return_pct": 6.23,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 64,
+   "market": 39,
+   "already": 11
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -8.45,
+    "median": -0.36,
+    "p95": 12.8
+   },
+   "max_drawdown_pct": {
+    "median": -5.21,
+    "p95_worst": -9.37,
+    "p99_worst": -11.19
+   },
+   "prob_losing_money_pct": 52.1,
+   "losing_streak": {
+    "median": 10,
+    "p95": 17
+   }
+  },
+  "strategy": "macd_momentum_v2",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 133,
+  "win_rate_pct": 30.1,
+  "breakeven_win_rate_pct": 30.5,
+  "avg_win_r": 1.99,
+  "avg_loss_r": -0.87,
+  "profit_factor": 0.97,
+  "total_costs": 24766.72,
+  "net_pnl": -6793.33,
+  "total_return_pct": -1.36,
+  "cagr_pct": -0.23,
+  "max_drawdown_pct": -14.64,
+  "sharpe": -0.03,
+  "exp_r": -0.013,
+  "sd_r": 1.64,
+  "t_stat": -0.09,
+  "ci95_r": [
+   -0.284,
+   0.279
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": 3.86,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 623,
+   "already": 422,
+   "market": 75,
+   "would": 14,
+   "stop": 3,
+   "charges": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -14.64,
+    "median": -1.93,
+    "p95": 15.98
+   },
+   "max_drawdown_pct": {
+    "median": -9.93,
+    "p95_worst": -17.82,
+    "p99_worst": -21.17
+   },
+   "prob_losing_money_pct": 58.2,
+   "losing_streak": {
+    "median": 11,
+    "p95": 18
+   }
+  },
+  "strategy": "donchian_breakout",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 84,
+  "win_rate_pct": 31.0,
+  "breakeven_win_rate_pct": 28.2,
+  "avg_win_r": 2.17,
+  "avg_loss_r": -0.85,
+  "profit_factor": 1.09,
+  "total_costs": 12464.66,
+  "net_pnl": 10910.36,
+  "total_return_pct": 2.18,
+  "cagr_pct": 0.37,
+  "max_drawdown_pct": -10.9,
+  "sharpe": 0.12,
+  "exp_r": 0.082,
+  "sd_r": 2.81,
+  "t_stat": 0.27,
+  "ci95_r": [
+   -0.386,
+   0.777
+  ],
+  "trades_needed_t2": 4636,
+  "gross_return_pct": 6.11,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 697,
+   "already": 620,
+   "market": 57,
+   "stop": 1,
+   "would": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -13.63,
+    "median": 1.2,
+    "p95": 26.5
+   },
+   "max_drawdown_pct": {
+    "median": -8.81,
+    "p95_worst": -15.5,
+    "p99_worst": -18.88
+   },
+   "prob_losing_money_pct": 46.1,
+   "losing_streak": {
+    "median": 9,
+    "p95": 16
+   }
+  },
+  "strategy": "donchian_breakout_v2",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 342,
+  "win_rate_pct": 54.1,
+  "breakeven_win_rate_pct": 62.7,
+  "avg_win_r": 0.28,
+  "avg_loss_r": -0.48,
+  "profit_factor": 0.68,
+  "total_costs": 53242.43,
+  "net_pnl": -55800.59,
+  "total_return_pct": -11.16,
+  "cagr_pct": -2.01,
+  "max_drawdown_pct": -11.37,
+  "sharpe": -0.82,
+  "exp_r": -0.07,
+  "sd_r": 0.51,
+  "t_stat": -2.55,
+  "ci95_r": [
+   -0.126,
+   -0.018
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": 4.03,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 842,
+   "market": 524,
+   "already": 395,
+   "would": 14,
+   "stop": 1,
+   "charges": 1
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -17.9,
+    "median": -11.24,
+    "p95": -4.56
+   },
+   "max_drawdown_pct": {
+    "median": -12.38,
+    "p95_worst": -18.58,
+    "p99_worst": -21.29
+   },
+   "prob_losing_money_pct": 99.7,
+   "losing_streak": {
+    "median": 7,
+    "p95": 10
+   }
+  },
+  "strategy": "rsi2_reversion",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 205,
+  "win_rate_pct": 54.1,
+  "breakeven_win_rate_pct": 57.9,
+  "avg_win_r": 0.29,
+  "avg_loss_r": -0.4,
+  "profit_factor": 0.82,
+  "total_costs": 29107.99,
+  "net_pnl": -16407.13,
+  "total_return_pct": -3.28,
+  "cagr_pct": -0.57,
+  "max_drawdown_pct": -4.67,
+  "sharpe": -0.38,
+  "exp_r": -0.032,
+  "sd_r": 0.44,
+  "t_stat": -1.06,
+  "ci95_r": [
+   -0.092,
+   0.027
+  ],
+  "trades_needed_t2": null,
+  "gross_return_pct": 4.29,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 375,
+   "market": 246,
+   "already": 110,
+   "would": 2
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": -8.11,
+    "median": -3.19,
+    "p95": 1.81
+   },
+   "max_drawdown_pct": {
+    "median": -4.99,
+    "p95_worst": -8.98,
+    "p99_worst": -10.54
+   },
+   "prob_losing_money_pct": 85.4,
+   "losing_streak": {
+    "median": 6,
+    "p95": 9
+   }
+  },
+  "strategy": "rsi2_reversion_v2",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ },
+ {
+  "trades": 50,
+  "win_rate_pct": 48.0,
+  "breakeven_win_rate_pct": 29.0,
+  "avg_win_r": 1.54,
+  "avg_loss_r": -0.63,
+  "profit_factor": 2.21,
+  "total_costs": 7013.33,
+  "net_pnl": 52616.6,
+  "total_return_pct": 10.52,
+  "cagr_pct": 1.73,
+  "max_drawdown_pct": -3.84,
+  "sharpe": 0.96,
+  "exp_r": 0.411,
+  "sd_r": 1.21,
+  "t_stat": 2.39,
+  "ci95_r": [
+   0.086,
+   0.742
+  ],
+  "trades_needed_t2": 35,
+  "gross_return_pct": 12.5,
+  "buy_hold": {
+   "total_return_pct": 149.05,
+   "cagr_pct": 16.95,
+   "max_drawdown_pct": -26.36,
+   "sharpe": 0.95
+  },
+  "blocked_by": {
+   "price": 56,
+   "market": 23,
+   "already": 11,
+   "reward:risk": 4
+  },
+  "montecarlo": {
+   "return_pct": {
+    "p5": 3.09,
+    "median": 10.65,
+    "p95": 18.44
+   },
+   "max_drawdown_pct": {
+    "median": -1.85,
+    "p95_worst": -3.55,
+    "p99_worst": -4.46
+   },
+   "prob_losing_money_pct": 0.6,
+   "losing_streak": {
+    "median": 5,
+    "p95": 8
+   }
+  },
+  "strategy": "supertrend_adx",
+  "universe": "random:30:11:2026",
+  "symbols": [
+   "ACC",
+   "AMBUJACEM",
+   "ASHOKLEY",
+   "BAJAJ-AUTO",
+   "BANKBARODA",
+   "BERGEPAINT",
+   "COALINDIA",
+   "DIVISLAB",
+   "DRREDDY",
+   "EXIDEIND",
+   "GODREJCP",
+   "GRASIM",
+   "HAVELLS",
+   "HCLTECH",
+   "HEROMOTOCO",
+   "HINDZINC",
+   "INDUSINDBK",
+   "IOC",
+   "NMDC",
+   "NTPC",
+   "RCOM",
+   "SUZLON",
+   "TATAPOWER",
+   "TATASTEEL",
+   "TMPV",
+   "UNIONBANK",
+   "UPL",
+   "VOLTAS",
+   "WIPRO",
+   "ZEEL"
+  ],
+  "window": "2021-01-01:",
+  "capital": 500000.0,
+  "regime_filter": true,
+  "risk_overrides": {},
+  "interval": "1day"
+ }
+]

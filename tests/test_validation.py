@@ -36,3 +36,18 @@ def test_r_stats():
     assert out["ci95_r"][0] < out["exp_r"] < out["ci95_r"][1]
     assert out["trades_needed_t2"] > 0
     assert vs.r_stats(np.array([]))["exp_r"] is None
+
+
+def test_every_strategy_has_a_test_status():
+    for name in strategies.STRATEGIES:
+        st, why = strategies.status(name)
+        assert st in ("failed", "unproven", "validated"), name
+        assert why
+
+
+def test_live_run_refuses_a_failed_strategy(capsys):
+    from types import SimpleNamespace
+    from growwbot import cli
+    cfg = SimpleNamespace(strategy={"name": "rsi2_reversion", "params": {}})
+    assert cli.cmd_run(SimpleNamespace(live=True, once=True), cfg) == 1
+    assert "Refusing" in capsys.readouterr().out

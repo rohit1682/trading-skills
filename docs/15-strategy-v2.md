@@ -1,5 +1,9 @@
 # 15. Strategy v2: fixing the losers, then testing on stocks they never saw (November 2026)
 
+> **Update ([doc 16](16-holdout-and-status.md)):** on a second, fresh set of 30
+> random stocks, `donchian_breakout_v2` lost money (-0.31 R a trade in
+> 2021-2026). The "most promising" conclusion below did not hold up.
+
 [Doc 14](14-historical-validation.md) found that six of the seven strategies
 lost money out of sample. This round tried to fix them, and then tested the
 fixes on **30 randomly drawn stocks** the fixes were not designed on, over

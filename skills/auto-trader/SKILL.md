@@ -40,6 +40,16 @@ The computer must stay on and online.
 
 Only positions the bot opened are touched. Positions from the Groww app are ignored.
 
+## Check the strategy's test status first
+
+Run `python -m growwbot strategies` and tell the user the configured
+strategy's status before starting. As of Nov 2026 (docs 14-15) no strategy is
+validated: `failed` ones lost money out of sample, `unproven` ones are mixed or
+not distinguishable from luck. `run` warns on a failed strategy in paper mode
+and **refuses** it with `--live`. Never suggest editing `STATUS` in
+`growwbot/strategies.py` to get past that; a status changes only after a new
+out-of-sample test (`scripts/compare_versions.py`).
+
 ## The path to live (tell the user this, every time they ask to go live)
 
 1. Backtest passes (`strategy-backtester`), including out-of-sample.

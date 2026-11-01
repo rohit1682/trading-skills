@@ -59,11 +59,12 @@ Rules for the conversation:
 Before running anything, tell the user what docs 14 and 15 found on 2010-2026
 NSE data, so they don't mistake a lucky short backtest for an edge:
 - No strategy, v1 or v2, has a statistically proven edge out of sample.
-- `donchian_breakout_v2` is the most promising (positive on all six test sets,
-  t-stats 0.2-1.75); `ema_trend_v2` and `macd_momentum_v2` are mixed.
+  `python -m growwbot strategies` shows each one's status and evidence.
+- `donchian_breakout_v2` looked promising on 5 test sets, then lost on a fresh
+  holdout (doc 16); `supertrend_adx`, `ema_trend_v2` and `macd_momentum_v2` are mixed.
 - `rsi2_reversion` (both versions), `macd_momentum`, `vwap_pullback` and `orb`
   (both versions) lost money; don't recommend them at small capital.
 - Buying and holding the same stocks beat every strategy by a wide margin.
-Details: `docs/14-historical-validation.md`, `docs/15-strategy-v2.md`.
+Details: `docs/14-historical-validation.md`, `docs/15-strategy-v2.md`, `docs/16-holdout-and-status.md`.
 To re-test properly: `python scripts/validate_strategies.py` and
 `python scripts/compare_versions.py` (see those docs).

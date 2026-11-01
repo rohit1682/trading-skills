@@ -16,7 +16,8 @@ Run from the repo root.
 ```bash
 python -m growwbot scan                         # configured strategy, configured watchlist
 python -m growwbot scan --all                   # every strategy
-python -m growwbot scan --strategy rsi2_reversion --symbols RELIANCE INFY TCS
+python -m growwbot scan --strategy donchian_breakout_v2 --symbols RELIANCE INFY TCS
+python -m growwbot strategies                    # which strategies passed/failed the historical test
 python -m growwbot scan --json                  # machine-readable
 ```
 
@@ -27,7 +28,9 @@ the last closed 5-minute bar.
 
 ## How to present the result
 
-1. A table: symbol, strategy, close, stop, target, risk % (distance to stop).
+1. A table: symbol, strategy, tested status, close, stop, target, risk % (distance to stop).
+   Flag signals from strategies whose status is `failed`: they lost money in
+   the 2010-2026 test and are shown for reference only.
 2. For the top 1-3 rows, run `python -m growwbot analyze SYMBOL` and give a
    two-line read: trend (EMA stack, Supertrend), momentum (RSI, MACD),
    volatility (ATR %), volume (RVOL).

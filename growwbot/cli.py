@@ -125,7 +125,8 @@ def cmd_scan(args, cfg):
                 c = float(df["close"].iloc[-1])
                 stop = float(sig["stop"])
                 tgt = None if math.isnan(sig["target"]) else round(float(sig["target"]), 2)
-                rows.append({"symbol": sym, "strategy": name, "bar": str(df.index[-1]), "close": round(c, 2),
+                rows.append({"symbol": sym, "strategy": name, "tested": strategies.status(name)[0],
+                             "bar": str(df.index[-1]), "close": round(c, 2),
                              "stop": round(stop, 2), "target": tgt, "risk_pct": round(100 * (c - stop) / c, 2),
                              "rsi14": round(float(indicators.rsi(df["close"]).iloc[-1]), 1)})
     rows.sort(key=lambda r: r["risk_pct"])
@@ -199,7 +200,9 @@ def cmd_backtest(args, cfg):
             res.trades_df().to_csv(out_dir / f"{name}-{stamp}-trades.csv", index=False)
         res.equity.to_csv(out_dir / f"{name}-{stamp}-equity.csv", header=["equity"])
         if not args.json and not args.all:
+            st, why = strategies.status(name)
             print(f"\n== {name}: {strat.description}")
+            print(f"   historical test status: {st.upper()} ({why})")
             print(f"   {len(universe)} symbols, interval {strat.interval}, capital Rs {capital:,.0f}, costs + {slip}% slippage")
             _print(row, False)
             print(f"   trades -> {out_dir}/{name}-{stamp}-trades.csv")
@@ -272,7 +275,30 @@ def cmd_trade(args, cfg):
     return 0 if ok else 1
 
 
+def cmd_strategies(args, cfg):
+    rows = [{"strategy": n, "interval": s.interval, "product": s.product, "tested": strategies.status(n)[0],
+             "evidence": strategies.status(n)[1], "description": s.description}
+            for n, s in strategies.STRATEGIES.items()]
+    if args.json:
+        _print(rows, True)
+        return
+    print(pd.DataFrame(rows)[["strategy", "interval", "tested", "evidence"]].to_string(index=False))
+    print("\nNo strategy has a proven edge yet. Details: docs/14-historical-validation.md, docs/15-strategy-v2.md, "
+          "docs/16-strategy-v3.md. " + DISCLAIMER)
+
+
 def cmd_run(args, cfg):
+    name = cfg.strategy["name"]
+    st, why = strategies.status(name)
+    if st == "failed":
+        msg = f"Strategy '{name}' FAILED the historical test ({why})."
+        if args.live:
+            print(msg + " Refusing to trade it with real money. Pick another in config.toml "
+                  "(`python -m growwbot strategies`).")
+            return 1
+        print("[warn] " + msg + " Paper trading it anyway.", file=sys.stderr)
+    elif st != "validated":
+        print(f"[note] Strategy '{name}' is {st.upper()} in the historical test: {why}.", file=sys.stderr)
     broker = brk.make_broker(cfg, args.live)
     if broker.live:
         print("*** LIVE TRADING: real orders will be sent to Groww. Ctrl+C stops the engine; "
@@ -683,6 +709,7 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("symbol"); sp.add_argument("--stop", type=float, required=True); sp.add_argument("--target", type=float)
     sp.add_argument("--qty", type=int); sp.add_argument("--price", type=float); sp.add_argument("--intraday", action="store_true")
     sp.add_argument("--live", action="store_true"); sp.add_argument("--yes", action="store_true")
+    add("strategies", cmd_strategies, "list strategies and their historical-test status")
     sp = add("run", cmd_run, "run the automated engine during market hours")
     sp.add_argument("--live", action="store_true"); sp.add_argument("--once", action="store_true")
     sp = add("positions", cmd_positions, "show bot positions, cash, today's risk state")

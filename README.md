@@ -65,7 +65,10 @@ Example prompts for each: [docs/04-skills-guide.md](docs/04-skills-guide.md).
 **Tested on 2010-2026 NSE data, no strategy has a proven edge yet**, and
 buying and holding beat all of them. See
 [historical validation](docs/14-historical-validation.md) and
-[strategy v2](docs/15-strategy-v2.md) before trading any of them.
+[strategy v2](docs/15-strategy-v2.md) and the
+[fresh holdout](docs/16-holdout-and-status.md) before trading any of them.
+`python -m growwbot strategies` shows each strategy's test status, and live
+trading refuses the ones that failed.
 
 Rules, strengths and failure modes: [docs/06-strategies.md](docs/06-strategies.md).
 All are long-only and use completed candles only (a test proves no strategy

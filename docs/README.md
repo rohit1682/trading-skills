@@ -19,6 +19,7 @@ Read in order the first time.
 | 13 | [Going live, step by step](13-going-live.md) | subscription, daily login, static IP, funding, the live gate, first tiny order |
 | 14 | [Historical validation](14-historical-validation.md) | Nov 2026 test of all 7 strategies on 16 years of NSE data: none has a proven edge yet |
 | 15 | [Strategy v2](15-strategy-v2.md) | fixes for the losers, tested on 30 random other stocks 2010-2020 and on 2021-2026 |
+| 16 | [Holdout and status](16-holdout-and-status.md) | a fresh 30-stock holdout, why v3 was dropped, and the `strategies` status command |
 
 Also: [DISCLAIMER](../DISCLAIMER.md), [SECURITY](../SECURITY.md),
 [CONTRIBUTING](../CONTRIBUTING.md), [CHANGELOG](../CHANGELOG.md).
