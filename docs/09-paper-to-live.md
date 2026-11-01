@@ -1,6 +1,7 @@
 # 9. Paper to live: the checklist
 
-Go through every box. If one fails, stay on paper.
+Go through every box. If one fails, stay on paper. For the detailed
+walkthrough of each step, see [Going live, step by step](13-going-live.md).
 
 ## Before paper trading
 

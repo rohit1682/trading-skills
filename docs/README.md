@@ -16,6 +16,7 @@ Read in order the first time.
 | 10 | [Running automatically](10-automation.md) | Windows Task Scheduler, cron, keeping the PC awake |
 | 11 | [Architecture](11-architecture.md) | how the code fits together, adding a strategy |
 | 12 | [FAQ and troubleshooting](12-faq.md) | common errors and questions |
+| 13 | [Going live, step by step](13-going-live.md) | subscription, daily login, static IP, funding, the live gate, first tiny order |
 
 Also: [DISCLAIMER](../DISCLAIMER.md), [SECURITY](../SECURITY.md),
 [CONTRIBUTING](../CONTRIBUTING.md), [CHANGELOG](../CHANGELOG.md).
