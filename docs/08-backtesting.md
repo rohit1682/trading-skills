@@ -60,5 +60,8 @@ pass `--csv-dir`.
 - **Regime dependence:** a strategy tested only in 2023-24's bull market tells
   you little about a bear market.
 
+For a full run of every strategy on 16 years of NSE data, and what it found,
+see [Historical validation](14-historical-validation.md).
+
 Live results are almost always worse than the backtest. Paper trade before
 risking money ([Paper to live](09-paper-to-live.md)).

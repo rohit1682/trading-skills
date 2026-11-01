@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- `docs/14-historical-validation.md`: every strategy tested on 2010-2026 NSE
+  data (watchlist and NIFTY 50), with a 70/30 time split, Groww charges,
+  slippage and all risk rules. Result: no strategy has a demonstrated edge out
+  of sample; the intraday ones lose even before charges.
+- `scripts/validate_strategies.py` (IS/OOS backtests plus t-stats, bootstrap
+  intervals, before-cost runs, buy-and-hold, Monte Carlo and a look-ahead
+  probe) and `scripts/fetch_data.py` (Yahoo download for it).
+
 ## 0.3.0 (2026-10-31)
 
 - New `trade-odds` skill and `growwbot odds` command: bootstrap replays of a

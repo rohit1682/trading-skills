@@ -17,6 +17,7 @@ Read in order the first time.
 | 11 | [Architecture](11-architecture.md) | how the code fits together, adding a strategy |
 | 12 | [FAQ and troubleshooting](12-faq.md) | common errors and questions |
 | 13 | [Going live, step by step](13-going-live.md) | subscription, daily login, static IP, funding, the live gate, first tiny order |
+| 14 | [Historical validation](14-historical-validation.md) | Nov 2026 test of all 7 strategies on 16 years of NSE data: none has a proven edge yet |
 
 Also: [DISCLAIMER](../DISCLAIMER.md), [SECURITY](../SECURITY.md),
 [CONTRIBUTING](../CONTRIBUTING.md), [CHANGELOG](../CHANGELOG.md).
